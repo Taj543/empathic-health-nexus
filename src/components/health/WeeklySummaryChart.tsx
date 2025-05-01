@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   LineChart,
   Line,
@@ -8,7 +8,8 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  ResponsiveContainer
+  ResponsiveContainer,
+  ReferenceLine
 } from 'recharts';
 import { format, subDays } from 'date-fns';
 import { 
@@ -16,6 +17,7 @@ import {
   ChartTooltip, 
   ChartTooltipContent 
 } from "@/components/ui/chart";
+import { cn } from "@/lib/utils";
 
 // Generate dummy data for the past week
 const generateWeeklyData = () => {
@@ -42,41 +44,50 @@ interface WeeklySummaryChartProps {
 }
 
 export function WeeklySummaryChart({ className, metric }: WeeklySummaryChartProps) {
-  const data = generateWeeklyData();
+  const data = useMemo(() => generateWeeklyData(), []);
   
   const metricConfig = {
     heartRate: {
       label: 'Heart Rate',
       color: '#EF4444',
       unit: 'bpm',
-      dataKey: 'heartRate'
+      dataKey: 'heartRate',
+      targetValue: 72,
+      minValue: 60,
+      maxValue: 90
     },
     bloodPressure: {
       label: 'Blood Pressure',
       systolicColor: '#3B82F6',
       diastolicColor: '#60A5FA',
-      unit: 'mmHg'
+      unit: 'mmHg',
+      targetSystolic: 120,
+      targetDiastolic: 80
     },
     spO2: {
       label: 'SpO₂',
       color: '#10B981',
       unit: '%',
-      dataKey: 'spO2'
+      dataKey: 'spO2',
+      targetValue: 98,
+      minValue: 95
     },
     steps: {
       label: 'Steps',
       color: '#8B5CF6',
-      dataKey: 'steps'
+      dataKey: 'steps',
+      targetValue: 10000
     },
     calories: {
       label: 'Calories',
       color: '#F59E0B',
       unit: 'kcal',
-      dataKey: 'calories'
+      dataKey: 'calories',
+      targetValue: 1500
     }
   };
 
-  // Fixed: Create a config for chart colors based on the metric
+  // Create a config for chart colors based on the metric
   const config = {
     [metric]: {
       theme: {
@@ -102,27 +113,74 @@ export function WeeklySummaryChart({ className, metric }: WeeklySummaryChartProp
     }
   };
   
+  // Get the appropriate target value for reference lines based on metric
+  const getTargetValue = () => {
+    if (metric === 'bloodPressure') return null;
+    return metricConfig[metric].targetValue;
+  };
+  
+  const targetValue = getTargetValue();
+  
+  // Custom tooltip formatter based on metric
+  const formatTooltipValue = (value: number, name: string) => {
+    if (name === "Heart Rate") return `${value} bpm`;
+    if (name === "SpO₂") return `${value}%`;
+    if (name === "Systolic" || name === "Diastolic") return `${value} mmHg`;
+    if (name === "Steps") return value.toLocaleString();
+    if (name === "Calories") return `${value} kcal`;
+    return value;
+  };
+  
   const renderChart = () => {
     if (metric === 'bloodPressure') {
       return (
         <LineChart data={data}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <ChartTooltip content={<ChartTooltipContent />} />
-          <Legend />
+          <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.4} />
+          <XAxis 
+            dataKey="name" 
+            tick={{ fontSize: 12 }}
+            stroke="#94a3b8"
+            tickLine={{ stroke: '#94a3b8' }}
+          />
+          <YAxis 
+            tick={{ fontSize: 12 }}
+            stroke="#94a3b8"
+            tickLine={{ stroke: '#94a3b8' }}
+          />
+          <ChartTooltip 
+            content={<ChartTooltipContent />}
+            formatter={formatTooltipValue} 
+          />
+          <Legend wrapperStyle={{ paddingTop: 10 }} />
+          <ReferenceLine 
+            y={120} 
+            stroke="#3B82F6" 
+            strokeDasharray="3 3" 
+            label={{ value: "Target Systolic", position: "insideTopLeft", fill: "#3B82F6", fontSize: 10 }} 
+          />
+          <ReferenceLine 
+            y={80} 
+            stroke="#60A5FA" 
+            strokeDasharray="3 3" 
+            label={{ value: "Target Diastolic", position: "insideBottomLeft", fill: "#60A5FA", fontSize: 10 }} 
+          />
           <Line 
             type="monotone" 
             dataKey="bloodPressureSystolic" 
             name="Systolic" 
             stroke={metricConfig.bloodPressure.systolicColor} 
-            activeDot={{ r: 8 }} 
+            strokeWidth={2}
+            dot={{ r: 4 }}
+            activeDot={{ r: 6, stroke: 'white', strokeWidth: 2 }} 
           />
           <Line 
             type="monotone" 
             dataKey="bloodPressureDiastolic" 
             name="Diastolic" 
-            stroke={metricConfig.bloodPressure.diastolicColor} 
+            stroke={metricConfig.bloodPressure.diastolicColor}
+            strokeWidth={2}
+            dot={{ r: 4 }}
+            activeDot={{ r: 6, stroke: 'white', strokeWidth: 2 }}
           />
         </LineChart>
       );
@@ -130,24 +188,61 @@ export function WeeklySummaryChart({ className, metric }: WeeklySummaryChartProp
     
     return (
       <LineChart data={data}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <ChartTooltip content={<ChartTooltipContent />} />
-        <Legend />
+        <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.4} />
+        <XAxis 
+          dataKey="name" 
+          tick={{ fontSize: 12 }}
+          stroke="#94a3b8"
+          tickLine={{ stroke: '#94a3b8' }}
+        />
+        <YAxis 
+          tick={{ fontSize: 12 }}
+          stroke="#94a3b8"
+          tickLine={{ stroke: '#94a3b8' }}
+        />
+        <ChartTooltip 
+          content={<ChartTooltipContent />}
+          formatter={formatTooltipValue}
+        />
+        <Legend wrapperStyle={{ paddingTop: 10 }} />
+        {targetValue && (
+          <ReferenceLine 
+            y={targetValue} 
+            stroke={metricConfig[metric].color} 
+            strokeDasharray="3 3"
+            label={{ 
+              value: `Target: ${targetValue}${metricConfig[metric].unit ? ' ' + metricConfig[metric].unit : ''}`, 
+              position: "insideTopLeft", 
+              fill: metricConfig[metric].color, 
+              fontSize: 10 
+            }}
+          />
+        )}
         <Line 
           type="monotone" 
           dataKey={metricConfig[metric].dataKey} 
           name={metricConfig[metric].label} 
-          stroke={metricConfig[metric].color} 
-          activeDot={{ r: 8 }} 
+          stroke={metricConfig[metric].color}
+          strokeWidth={2}
+          dot={{ r: 4, fill: metricConfig[metric].color }}
+          activeDot={{ r: 6, stroke: 'white', strokeWidth: 2 }}
         />
       </LineChart>
     );
   };
 
   return (
-    <div className={`h-64 ${className}`}>
+    <div className={cn(`h-[280px] w-full transition-all duration-300`, className)}>
+      <div className="text-sm text-gray-500 mb-2 flex items-center justify-between">
+        <span>
+          {metric === 'bloodPressure' ? 
+            'Blood Pressure Readings' : 
+            `${metricConfig[metric].label} Trend`}
+        </span>
+        <span className="text-xs bg-gray-100 px-2 py-1 rounded-md">
+          Last 7 days
+        </span>
+      </div>
       <ChartContainer config={config}>
         {renderChart()}
       </ChartContainer>

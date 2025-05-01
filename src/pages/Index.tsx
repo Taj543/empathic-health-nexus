@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Plus, MessageCircle, Search, Heart, Activity, Bell } from "lucide-react";
 import { HealthMetricCard } from "@/components/health/HealthMetricCard";
@@ -7,6 +6,7 @@ import { ActionButton } from "@/components/health/ActionButton";
 import { BottomNavigation } from "@/components/health/BottomNavigation";
 import { HealthMetricGrid } from "@/components/health/HealthMetricGrid";
 import { MedicationAlarmDialog } from "@/components/health/MedicationAlarmDialog";
+import { WeeklySummaryTabs } from "@/components/health/WeeklySummaryTabs";
 import { useToast } from "@/hooks/use-toast";
 
 interface Medication {
@@ -170,7 +170,7 @@ const Index = () => {
         </HealthMetricGrid>
       </div>
 
-      {/* Medications and Activity Summary */}
+      {/* Medications and Weekly Summary */}
       <div className="px-6 mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Medications */}
         <div className="health-card">
@@ -202,12 +202,9 @@ const Index = () => {
           </button>
         </div>
 
-        {/* Activity Summary */}
+        {/* Weekly Summary */}
         <div className="health-card">
-          <h2 className="text-lg font-semibold mb-4">Weekly Summary</h2>
-          <div className="aspect-video bg-gray-100 rounded-lg flex items-center justify-center">
-            <p className="text-gray-500">Health trend visualization</p>
-          </div>
+          <WeeklySummaryTabs />
         </div>
       </div>
 

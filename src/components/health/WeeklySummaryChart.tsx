@@ -76,11 +76,16 @@ export function WeeklySummaryChart({ className, metric }: WeeklySummaryChartProp
     }
   };
 
+  // Fixed: Create a config for chart colors based on the metric
   const config = {
     [metric]: {
       theme: {
-        light: metricConfig[metric].color || '#3B82F6',
-        dark: metricConfig[metric].color || '#3B82F6'
+        light: metric === 'bloodPressure' 
+          ? metricConfig.bloodPressure.systolicColor 
+          : metricConfig[metric].color,
+        dark: metric === 'bloodPressure' 
+          ? metricConfig.bloodPressure.systolicColor 
+          : metricConfig[metric].color
       }
     },
     systolic: {

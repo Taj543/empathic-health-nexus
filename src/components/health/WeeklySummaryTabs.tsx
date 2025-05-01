@@ -2,7 +2,7 @@
 import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { WeeklySummaryChart } from "./WeeklySummaryChart";
-import { Heart, Activity, Lungs, BarChart } from "lucide-react";
+import { Heart, Activity, BarChart } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function WeeklySummaryTabs() {
@@ -29,7 +29,7 @@ export function WeeklySummaryTabs() {
             value="spO2"
             className="flex flex-col items-center gap-1 py-2 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800"
           >
-            <Lungs size={16} className="text-health-success" />
+            <Activity size={16} className="text-health-success" />
             <span className="text-xs">SpO₂</span>
           </TabsTrigger>
           <TabsTrigger 

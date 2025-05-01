@@ -76,7 +76,8 @@ export function WeeklySummaryChart({ className, metric }: WeeklySummaryChartProp
       label: 'Steps',
       color: '#8B5CF6',
       dataKey: 'steps',
-      targetValue: 10000
+      targetValue: 10000,
+      unit: '' // Adding the missing unit property
     },
     calories: {
       label: 'Calories',

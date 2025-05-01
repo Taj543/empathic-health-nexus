@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Plus, MessageCircle, Search, Calendar } from "lucide-react";
+import { Plus, MessageCircle, Search } from "lucide-react";
 import { HealthMetricCard } from "@/components/health/HealthMetricCard";
 import { MedicationCard } from "@/components/health/MedicationCard";
 import { ActionButton } from "@/components/health/ActionButton";
@@ -82,7 +82,7 @@ const Index = () => {
       {/* Quick Actions */}
       <div className="px-6 mt-6">
         <h2 className="text-xl font-semibold mb-4">Quick Actions</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div className="grid grid-cols-3 gap-3">
           <ActionButton
             icon={<Plus size={24} />}
             label="Meds"
@@ -90,10 +90,6 @@ const Index = () => {
           <ActionButton
             icon={<MessageCircle size={24} />}
             label="Chat"
-          />
-          <ActionButton
-            icon={<Calendar size={24} />}
-            label="Appointments"
           />
           <ActionButton
             icon={<Search size={24} />}

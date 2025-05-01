@@ -1,23 +1,114 @@
 
 import { useState } from "react";
-import { Plus, MessageCircle, Search, Heart, Activity, Droplets } from "lucide-react";
+import { Plus, MessageCircle, Search, Heart, Activity, Bell } from "lucide-react";
 import { HealthMetricCard } from "@/components/health/HealthMetricCard";
 import { MedicationCard } from "@/components/health/MedicationCard";
 import { ActionButton } from "@/components/health/ActionButton";
 import { BottomNavigation } from "@/components/health/BottomNavigation";
 import { HealthMetricGrid } from "@/components/health/HealthMetricGrid";
+import { MedicationAlarmDialog } from "@/components/health/MedicationAlarmDialog";
+import { useToast } from "@/hooks/use-toast";
+
+interface Medication {
+  id: number;
+  name: string;
+  dosage: string;
+  time?: string;
+  taken: boolean;
+  alarms: { id: number; time: string; active: boolean }[];
+}
 
 const Index = () => {
-  const [medications, setMedications] = useState([
-    { id: 1, name: "Vitamin D", dosage: "1 tablet", time: "8:00 AM", taken: false },
-    { id: 2, name: "Ibuprofen", dosage: "1 tablet", time: "2:00 PM", taken: false },
+  const { toast } = useToast();
+  const [medications, setMedications] = useState<Medication[]>([
+    { 
+      id: 1, 
+      name: "Vitamin D", 
+      dosage: "1 tablet", 
+      taken: false,
+      alarms: [{ id: 1, time: "08:00", active: true }]
+    },
+    { 
+      id: 2, 
+      name: "Ibuprofen", 
+      dosage: "1 tablet", 
+      taken: false,
+      alarms: []
+    },
   ]);
+
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedMedication, setSelectedMedication] = useState<Medication | null>(null);
 
   const toggleMedication = (id: number) => {
     setMedications(
-      medications.map((med) =>
-        med.id === id ? { ...med, taken: !med.taken } : med
-      )
+      medications.map((med) => {
+        if (med.id === id) {
+          const newTaken = !med.taken;
+          // Show toast when medication is marked as taken
+          if (newTaken) {
+            toast({
+              title: "Medication taken",
+              description: `You've marked ${med.name} as taken.`,
+            });
+          }
+          return { ...med, taken: newTaken };
+        }
+        return med;
+      })
+    );
+  };
+
+  const toggleMedicationAlarm = (medicationId: number, alarmId: number) => {
+    setMedications(
+      medications.map((med) => {
+        if (med.id === medicationId) {
+          const updatedAlarms = med.alarms.map((alarm) => 
+            alarm.id === alarmId ? { ...alarm, active: !alarm.active } : alarm
+          );
+          return { ...med, alarms: updatedAlarms };
+        }
+        return med;
+      })
+    );
+  };
+  
+  const handleAddMedication = () => {
+    const newId = medications.length > 0 ? Math.max(...medications.map(m => m.id)) + 1 : 1;
+    const newMedication: Medication = {
+      id: newId,
+      name: "New Medication",
+      dosage: "1 tablet",
+      taken: false,
+      alarms: []
+    };
+    
+    setSelectedMedication(newMedication);
+    setMedications([...medications, newMedication]);
+    setDialogOpen(true);
+  };
+  
+  const handleEditMedication = (medication: Medication) => {
+    setSelectedMedication(medication);
+    setDialogOpen(true);
+  };
+  
+  const handleAddAlarm = (medicationId: number) => {
+    const medication = medications.find(m => m.id === medicationId);
+    if (medication) {
+      setSelectedMedication(medication);
+      setDialogOpen(true);
+    }
+  };
+  
+  const handleSaveMedication = (medicationId: number, updatedMedication: Partial<Medication>) => {
+    setMedications(
+      medications.map((med) => {
+        if (med.id === medicationId) {
+          return { ...med, ...updatedMedication };
+        }
+        return med;
+      })
     );
   };
 
@@ -93,13 +184,19 @@ const Index = () => {
                 key={med.id}
                 name={med.name}
                 dosage={med.dosage}
-                time={med.time}
                 taken={med.taken}
                 onToggle={() => toggleMedication(med.id)}
+                alarms={med.alarms}
+                onToggleAlarm={(alarmId) => toggleMedicationAlarm(med.id, alarmId)}
+                onAddAlarm={() => handleAddAlarm(med.id)}
+                onEditMedication={() => handleEditMedication(med)}
               />
             ))}
           </div>
-          <button className="mt-4 w-full py-3 border border-dashed border-gray-300 rounded-lg flex items-center justify-center text-health-accent hover:bg-gray-50">
+          <button 
+            onClick={handleAddMedication}
+            className="mt-4 w-full py-3 border border-dashed border-gray-300 rounded-lg flex items-center justify-center text-health-accent hover:bg-gray-50"
+          >
             <Plus size={16} className="mr-1" />
             Add Medication
           </button>
@@ -121,17 +218,26 @@ const Index = () => {
           <ActionButton
             icon={<Plus size={24} />}
             label="Meds"
+            onClick={handleAddMedication}
+          />
+          <ActionButton
+            icon={<Bell size={24} />}
+            label="Alarms"
           />
           <ActionButton
             icon={<MessageCircle size={24} />}
             label="Chat"
           />
-          <ActionButton
-            icon={<Search size={24} />}
-            label="Symptoms"
-          />
         </div>
       </div>
+
+      {/* Medication Alarm Dialog */}
+      <MedicationAlarmDialog
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        medication={selectedMedication}
+        onSave={handleSaveMedication}
+      />
 
       {/* Bottom Navigation */}
       <BottomNavigation />

@@ -1,0 +1,37 @@
+
+import { Link, useLocation } from "react-router-dom";
+import { Home, MessageCircle, Heart, Activity, BookOpen, User } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export function BottomNavigation() {
+  const location = useLocation();
+  
+  const navItems = [
+    { icon: <Home size={20} />, label: "Home", path: "/" },
+    { icon: <MessageCircle size={20} />, label: "Medical AI", path: "/medical-ai" },
+    { icon: <Heart size={20} />, label: "Emotional", path: "/emotional" },
+    { icon: <Activity size={20} />, label: "Diagnostics", path: "/diagnostics" },
+    { icon: <BookOpen size={20} />, label: "Knowledge", path: "/knowledge" },
+    { icon: <User size={20} />, label: "Profile", path: "/profile" },
+  ];
+
+  return (
+    <div className="fixed bottom-0 left-0 right-0 flex justify-around items-center py-2 bg-white border-t border-gray-200">
+      {navItems.map((item) => (
+        <Link
+          key={item.path}
+          to={item.path}
+          className={cn(
+            "flex flex-col items-center p-2",
+            location.pathname === item.path
+              ? "text-health-primary"
+              : "text-gray-500"
+          )}
+        >
+          <div>{item.icon}</div>
+          <span className="text-xs mt-1">{item.label}</span>
+        </Link>
+      ))}
+    </div>
+  );
+}

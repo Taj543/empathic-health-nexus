@@ -1,10 +1,11 @@
 
 import { useState } from "react";
-import { Plus, MessageCircle, Search } from "lucide-react";
+import { Plus, MessageCircle, Search, Heart, Activity, Droplets, Thermometer } from "lucide-react";
 import { HealthMetricCard } from "@/components/health/HealthMetricCard";
 import { MedicationCard } from "@/components/health/MedicationCard";
 import { ActionButton } from "@/components/health/ActionButton";
 import { BottomNavigation } from "@/components/health/BottomNavigation";
+import { HealthMetricGrid } from "@/components/health/HealthMetricGrid";
 
 const Index = () => {
   const [medications, setMedications] = useState([
@@ -28,20 +29,119 @@ const Index = () => {
         <p className="text-gray-600">Here's your health overview</p>
       </header>
 
-      {/* Health Metrics */}
-      <div className="px-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-        <HealthMetricCard
-          title="Heart Rate"
-          value={72}
-          unit="bpm"
-          status="normal"
-        />
-        <HealthMetricCard
-          title="Blood Pressure"
-          value="120/80"
-          unit="mmHg"
-          status="normal"
-        />
+      {/* Health Metrics Categories */}
+      <div className="px-6">
+        <h2 className="text-xl font-semibold mb-3">Core Health Vitals</h2>
+        <HealthMetricGrid>
+          <HealthMetricCard
+            title="Heart Rate"
+            value={72}
+            unit="bpm"
+            status="normal"
+            icon={<Heart size={20} />}
+          />
+          <HealthMetricCard
+            title="Blood Pressure"
+            value="120/80"
+            unit="mmHg"
+            status="normal"
+          />
+          <HealthMetricCard
+            title="SpO₂"
+            value={98}
+            unit="%"
+            status="normal"
+          />
+          <HealthMetricCard
+            title="Respiratory Rate"
+            value={16}
+            unit="bpm"
+            status="normal"
+          />
+          <HealthMetricCard
+            title="Body Temperature"
+            value={98.6}
+            unit="°F"
+            status="normal"
+            icon={<Thermometer size={20} />}
+          />
+          <HealthMetricCard
+            title="Blood Glucose"
+            value={95}
+            unit="mg/dL"
+            status="normal"
+          />
+        </HealthMetricGrid>
+      </div>
+
+      <div className="px-6 mt-6">
+        <h2 className="text-xl font-semibold mb-3">Cognitive & Emotional Health</h2>
+        <HealthMetricGrid>
+          <HealthMetricCard
+            title="Mood"
+            value="Good"
+            status="normal"
+          />
+          <HealthMetricCard
+            title="Stress Level"
+            value="Low"
+            status="normal"
+          />
+          <HealthMetricCard
+            title="Sleep"
+            value="7.5"
+            unit="hrs"
+            status="normal"
+          />
+        </HealthMetricGrid>
+      </div>
+
+      <div className="px-6 mt-6">
+        <h2 className="text-xl font-semibold mb-3">Activity & Lifestyle</h2>
+        <HealthMetricGrid>
+          <HealthMetricCard
+            title="Steps"
+            value="8,432"
+            status="normal"
+            icon={<Activity size={20} />}
+          />
+          <HealthMetricCard
+            title="Calories"
+            value={1250}
+            unit="kcal"
+            status="normal"
+          />
+          <HealthMetricCard
+            title="Active Minutes"
+            value={45}
+            unit="min"
+            status="normal"
+          />
+        </HealthMetricGrid>
+      </div>
+
+      <div className="px-6 mt-6">
+        <h2 className="text-xl font-semibold mb-3">Body Composition</h2>
+        <HealthMetricGrid>
+          <HealthMetricCard
+            title="BMI"
+            value={23.4}
+            status="normal"
+          />
+          <HealthMetricCard
+            title="Hydration"
+            value={65}
+            unit="%"
+            status="normal"
+            icon={<Droplets size={20} />}
+          />
+          <HealthMetricCard
+            title="Body Fat"
+            value={22}
+            unit="%"
+            status="normal"
+          />
+        </HealthMetricGrid>
       </div>
 
       {/* Medications and Activity Summary */}

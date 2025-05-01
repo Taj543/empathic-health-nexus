@@ -9,7 +9,7 @@ interface HealthMetricGridProps {
 
 export function HealthMetricGrid({ children, className }: HealthMetricGridProps) {
   return (
-    <div className={cn("grid grid-cols-2 md:grid-cols-3 gap-3", className)}>
+    <div className={cn("grid grid-cols-2 gap-3", className)}>
       {children}
     </div>
   );

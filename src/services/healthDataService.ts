@@ -2,7 +2,7 @@
 // This is a placeholder service for connecting to external health data sources
 // In a real implementation, this would include OAuth flows and API calls
 
-export type HealthDataSource = 'local' | 'googleFit' | 'appleHealth' | 'samsung' | 'fitbit';
+export type HealthDataSource = 'local' | 'googleFit' | 'samsung' | 'fitbit';
 
 export interface HealthDataConnection {
   id: string;
@@ -16,7 +16,6 @@ export interface HealthDataConnection {
 export const availableConnections: HealthDataConnection[] = [
   { id: 'local', name: 'Manual Entry', type: 'local', connected: true },
   { id: 'google-fit', name: 'Google Fit', type: 'googleFit', connected: false },
-  { id: 'apple-health', name: 'Apple Health', type: 'appleHealth', connected: false },
   { id: 'samsung', name: 'Samsung Health', type: 'samsung', connected: false },
   { id: 'fitbit', name: 'Fitbit', type: 'fitbit', connected: false },
 ];

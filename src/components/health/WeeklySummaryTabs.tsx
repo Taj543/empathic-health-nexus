@@ -1,11 +1,15 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { WeeklySummaryChart } from "./WeeklySummaryChart";
 import { Heart, Activity, BarChart } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { HealthDataSourceSelector } from "./HealthDataSourceSelector";
+import { HealthDataSource } from "@/services/healthDataService";
 
 export function WeeklySummaryTabs() {
+  const [dataSource, setDataSource] = useState<HealthDataSource>('local');
+  
   return (
     <Tabs defaultValue="heartRate" className="w-full">
       <div className="mb-4">
@@ -43,16 +47,22 @@ export function WeeklySummaryTabs() {
       </div>
 
       <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm border border-gray-100 dark:border-gray-700">
+        <HealthDataSourceSelector 
+          selectedSource={dataSource} 
+          onSourceSelect={(sourceId) => setDataSource(sourceId as HealthDataSource)} 
+          className="mb-4"
+        />
+        
         <TabsContent value="heartRate" className="mt-0">
-          <WeeklySummaryChart metric="heartRate" className="mt-2" />
+          <WeeklySummaryChart metric="heartRate" dataSource={dataSource} className="mt-2" />
         </TabsContent>
         
         <TabsContent value="bloodPressure" className="mt-0">
-          <WeeklySummaryChart metric="bloodPressure" className="mt-2" />
+          <WeeklySummaryChart metric="bloodPressure" dataSource={dataSource} className="mt-2" />
         </TabsContent>
         
         <TabsContent value="spO2" className="mt-0">
-          <WeeklySummaryChart metric="spO2" className="mt-2" />
+          <WeeklySummaryChart metric="spO2" dataSource={dataSource} className="mt-2" />
         </TabsContent>
         
         <TabsContent value="activity" className="mt-0">
@@ -63,11 +73,11 @@ export function WeeklySummaryTabs() {
             </TabsList>
             
             <TabsContent value="steps" className="mt-0">
-              <WeeklySummaryChart metric="steps" />
+              <WeeklySummaryChart metric="steps" dataSource={dataSource} />
             </TabsContent>
             
             <TabsContent value="calories" className="mt-0">
-              <WeeklySummaryChart metric="calories" />
+              <WeeklySummaryChart metric="calories" dataSource={dataSource} />
             </TabsContent>
           </Tabs>
         </TabsContent>

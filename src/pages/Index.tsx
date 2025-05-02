@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Plus, MessageCircle, Search, Heart, Activity, Bell } from "lucide-react";
 import { HealthMetricCard } from "@/components/health/HealthMetricCard";
 import { MedicationCard } from "@/components/health/MedicationCard";
@@ -8,6 +8,7 @@ import { HealthMetricGrid } from "@/components/health/HealthMetricGrid";
 import { MedicationAlarmDialog } from "@/components/health/MedicationAlarmDialog";
 import { WeeklySummaryTabs } from "@/components/health/WeeklySummaryTabs";
 import { useToast } from "@/hooks/use-toast";
+import { HealthDataSource, fetchHealthSummaryData } from "@/services/healthDataService";
 
 interface Medication {
   id: number;
@@ -36,9 +37,46 @@ const Index = () => {
       alarms: []
     },
   ]);
+  
+  // Add state for selected data source and health metrics
+  const [dataSource, setDataSource] = useState<HealthDataSource>('local');
+  const [healthMetrics, setHealthMetrics] = useState({
+    heartRate: 72,
+    bloodPressure: "120/80",
+    spO2: 98,
+    respiratoryRate: 16,
+    steps: 8432,
+    calories: 1250
+  });
+
+  // Fetch health summary data when data source changes
+  useEffect(() => {
+    const fetchSummaryData = async () => {
+      try {
+        const summaryData = await fetchHealthSummaryData(dataSource);
+        setHealthMetrics({
+          heartRate: summaryData.heartRate,
+          bloodPressure: summaryData.bloodPressure,
+          spO2: summaryData.spO2,
+          respiratoryRate: summaryData.respiratoryRate,
+          steps: summaryData.steps,
+          calories: summaryData.calories
+        });
+      } catch (error) {
+        console.error("Error fetching health summary data:", error);
+      }
+    };
+    
+    fetchSummaryData();
+  }, [dataSource]);
 
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedMedication, setSelectedMedication] = useState<Medication | null>(null);
+
+  // Handle data source change from WeeklySummaryTabs
+  const handleDataSourceChange = (source: HealthDataSource) => {
+    setDataSource(source);
+  };
 
   const toggleMedication = (id: number) => {
     setMedications(
@@ -117,7 +155,14 @@ const Index = () => {
       {/* Header */}
       <header className="px-6 pt-8 pb-4">
         <h1 className="text-2xl font-bold text-gray-900">Welcome back, Demo User</h1>
-        <p className="text-gray-600">Here's your health overview</p>
+        <p className="text-gray-600">
+          Here's your health overview
+          {dataSource !== 'local' && (
+            <span className="ml-2 text-xs bg-gray-100 px-2 py-0.5 rounded-full">
+              Connected to {dataSource}
+            </span>
+          )}
+        </p>
       </header>
 
       {/* Health Metrics Categories */}
@@ -126,26 +171,26 @@ const Index = () => {
         <HealthMetricGrid>
           <HealthMetricCard
             title="Heart Rate"
-            value={72}
+            value={healthMetrics.heartRate}
             unit="bpm"
             status="normal"
             icon={<Heart size={20} />}
           />
           <HealthMetricCard
             title="Blood Pressure"
-            value="120/80"
+            value={healthMetrics.bloodPressure}
             unit="mmHg"
             status="normal"
           />
           <HealthMetricCard
             title="SpO₂"
-            value={98}
+            value={healthMetrics.spO2}
             unit="%"
             status="normal"
           />
           <HealthMetricCard
             title="Respiratory Rate"
-            value={16}
+            value={healthMetrics.respiratoryRate}
             unit="bpm"
             status="normal"
           />
@@ -157,13 +202,13 @@ const Index = () => {
         <HealthMetricGrid>
           <HealthMetricCard
             title="Steps"
-            value="8,432"
+            value={healthMetrics.steps.toLocaleString()}
             status="normal"
             icon={<Activity size={20} />}
           />
           <HealthMetricCard
             title="Calories"
-            value={1250}
+            value={healthMetrics.calories}
             unit="kcal"
             status="normal"
           />
@@ -204,7 +249,7 @@ const Index = () => {
 
         {/* Weekly Summary */}
         <div className="health-card">
-          <WeeklySummaryTabs />
+          <WeeklySummaryTabs onDataSourceChange={handleDataSourceChange} />
         </div>
       </div>
 

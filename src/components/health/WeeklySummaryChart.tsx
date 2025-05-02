@@ -77,15 +77,8 @@ const metricConfigs: Record<string, HealthMetricConfig> = {
 };
 
 export function WeeklySummaryChart({ metric, className, dataSource = 'local' }: WeeklySummaryChartProps) {
-  const [data, setData] = useState<DataPoint[]>([
-    { time: 'Mon', value: Math.floor(Math.random() * 100) },
-    { time: 'Tue', value: Math.floor(Math.random() * 100) },
-    { time: 'Wed', value: Math.floor(Math.random() * 100) },
-    { time: 'Thu', value: Math.floor(Math.random() * 100) },
-    { time: 'Fri', value: Math.floor(Math.random() * 100) },
-    { time: 'Sat', value: Math.floor(Math.random() * 100) },
-    { time: 'Sun', value: Math.floor(Math.random() * 100) },
-  ]);
+  const [data, setData] = useState<DataPoint[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   
   const config = metricConfigs[metric] || {
     label: 'Value',
@@ -94,51 +87,39 @@ export function WeeklySummaryChart({ metric, className, dataSource = 'local' }: 
     dataKey: 'value'
   };
   
-  // In a real implementation, this would fetch data from the respective source
+  // Fetch data from the respective source
   useEffect(() => {
-    // This is where we would connect to external services
-    const fetchData = async () => {
+    const fetchDataFromSource = async () => {
       try {
-        if (dataSource !== 'local') {
-          // Get the current date and subtract 7 days to get the start date for weekly data
-          const endDate = new Date();
-          const startDate = new Date();
-          startDate.setDate(startDate.getDate() - 7);
-          
-          // Fetch data from the health service
-          const healthData = await fetchHealthData(dataSource, metric, startDate, endDate);
-          
-          // Add target property to each data point if config has a targetValue
-          if (config.targetValue) {
-            const dataWithTargets = healthData.map(point => ({
-              ...point,
-              target: config.targetValue
-            }));
-            setData(dataWithTargets);
-          } else {
-            setData(healthData);
-          }
-        } else {
-          // Just use random data for local source with targets if needed
-          const localData = data.map(point => ({
-            ...point,
-            ...(config.targetValue ? { target: config.targetValue } : {})
-          }));
-          setData(localData);
-        }
+        setIsLoading(true);
+        
+        // Get the current date and subtract 7 days to get the start date
+        const endDate = new Date();
+        const startDate = new Date();
+        startDate.setDate(startDate.getDate() - 7);
+        
+        // Fetch data from the health service
+        const healthData = await fetchHealthData(dataSource, metric, startDate, endDate);
+        setData(healthData);
       } catch (error) {
         console.error('Error fetching health data:', error);
-        // In case of error, use local data with targets if needed
-        const localData = data.map(point => ({
-          ...point,
-          ...(config.targetValue ? { target: config.targetValue } : {})
-        }));
-        setData(localData);
+        // Fallback to sample data in case of error
+        setData([
+          { time: 'Mon', value: Math.floor(Math.random() * 100), target: config.targetValue },
+          { time: 'Tue', value: Math.floor(Math.random() * 100), target: config.targetValue },
+          { time: 'Wed', value: Math.floor(Math.random() * 100), target: config.targetValue },
+          { time: 'Thu', value: Math.floor(Math.random() * 100), target: config.targetValue },
+          { time: 'Fri', value: Math.floor(Math.random() * 100), target: config.targetValue },
+          { time: 'Sat', value: Math.floor(Math.random() * 100), target: config.targetValue },
+          { time: 'Sun', value: Math.floor(Math.random() * 100), target: config.targetValue },
+        ]);
+      } finally {
+        setIsLoading(false);
       }
     };
     
-    fetchData();
-  }, [metric, dataSource]);
+    fetchDataFromSource();
+  }, [metric, dataSource, config.targetValue]);
 
   return (
     <div className={cn("w-full", className)}>
@@ -152,34 +133,40 @@ export function WeeklySummaryChart({ metric, className, dataSource = 'local' }: 
         </div>
       </div>
       <ResponsiveContainer width="100%" height={200}>
-        <ComposedChart data={data}>
-          <CartesianGrid strokeDasharray="3 3" className="stroke-gray-200 dark:stroke-gray-700" />
-          <XAxis dataKey="time" className="text-xs text-gray-500 dark:text-gray-400" />
-          <YAxis className="text-xs text-gray-500 dark:text-gray-400" />
-          <Tooltip 
-            formatter={(value: number) => [`${value} ${config.unit}`, config.label]}
-          />
-          <Line 
-            type="monotone" 
-            dataKey="value" 
-            stroke={config.color} 
-            strokeWidth={2} 
-            dot={false} 
-          />
-          {config.targetValue && (
-            <ReferenceLine 
-              y={config.targetValue} 
-              stroke="#FF8C00" 
-              strokeDasharray="3 3"
-              label={{ 
-                value: `Target: ${config.targetValue} ${config.unit}`,
-                fill: '#FF8C00',
-                fontSize: 10,
-                position: 'insideBottomRight'
-              }} 
+        {isLoading ? (
+          <div className="flex items-center justify-center h-full">
+            <div className="text-sm text-gray-500">Loading data...</div>
+          </div>
+        ) : (
+          <ComposedChart data={data}>
+            <CartesianGrid strokeDasharray="3 3" className="stroke-gray-200 dark:stroke-gray-700" />
+            <XAxis dataKey="time" className="text-xs text-gray-500 dark:text-gray-400" />
+            <YAxis className="text-xs text-gray-500 dark:text-gray-400" />
+            <Tooltip 
+              formatter={(value: number) => [`${value} ${config.unit}`, config.label]}
             />
-          )}
-        </ComposedChart>
+            <Line 
+              type="monotone" 
+              dataKey="value" 
+              stroke={config.color} 
+              strokeWidth={2} 
+              dot={false} 
+            />
+            {config.targetValue && (
+              <ReferenceLine 
+                y={config.targetValue} 
+                stroke="#FF8C00" 
+                strokeDasharray="3 3"
+                label={{ 
+                  value: `Target: ${config.targetValue} ${config.unit}`,
+                  fill: '#FF8C00',
+                  fontSize: 10,
+                  position: 'insideBottomRight'
+                }} 
+              />
+            )}
+          </ComposedChart>
+        )}
       </ResponsiveContainer>
     </div>
   );

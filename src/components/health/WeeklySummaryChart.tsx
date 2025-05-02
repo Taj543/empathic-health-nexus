@@ -5,6 +5,7 @@ import {
   ResponsiveContainer, ReferenceLine, Area, ComposedChart
 } from 'recharts';
 import { cn } from '@/lib/utils';
+import { fetchHealthData, HealthDataSource } from '@/services/healthDataService';
 
 // Define interfaces for our data structure
 interface DataPoint {
@@ -27,7 +28,7 @@ interface HealthMetricConfig {
 interface WeeklySummaryChartProps {
   metric: string;
   className?: string;
-  dataSource?: 'local' | 'googleFit' | 'appleHealth' | 'samsung' | 'fitbit';
+  dataSource?: HealthDataSource;
 }
 
 // Define metric configurations
@@ -96,30 +97,47 @@ export function WeeklySummaryChart({ metric, className, dataSource = 'local' }: 
   // In a real implementation, this would fetch data from the respective source
   useEffect(() => {
     // This is where we would connect to external services
-    // For now, we'll just simulate different data for different sources
-    if (dataSource !== 'local') {
-      const simulatedData = [
-        { time: 'Mon', value: Math.floor(Math.random() * 100) },
-        { time: 'Tue', value: Math.floor(Math.random() * 100) },
-        { time: 'Wed', value: Math.floor(Math.random() * 100) },
-        { time: 'Thu', value: Math.floor(Math.random() * 100) },
-        { time: 'Fri', value: Math.floor(Math.random() * 100) },
-        { time: 'Sat', value: Math.floor(Math.random() * 100) },
-        { time: 'Sun', value: Math.floor(Math.random() * 100) },
-      ];
-      
-      // Add target lines for the data points
-      if (config.targetValue) {
-        simulatedData.forEach(point => {
-          point.target = config.targetValue;
-        });
+    const fetchData = async () => {
+      try {
+        if (dataSource !== 'local') {
+          // Get the current date and subtract 7 days to get the start date for weekly data
+          const endDate = new Date();
+          const startDate = new Date();
+          startDate.setDate(startDate.getDate() - 7);
+          
+          // Fetch data from the health service
+          const healthData = await fetchHealthData(dataSource, metric, startDate, endDate);
+          
+          // Add target property to each data point if config has a targetValue
+          if (config.targetValue) {
+            const dataWithTargets = healthData.map(point => ({
+              ...point,
+              target: config.targetValue
+            }));
+            setData(dataWithTargets);
+          } else {
+            setData(healthData);
+          }
+        } else {
+          // Just use random data for local source with targets if needed
+          const localData = data.map(point => ({
+            ...point,
+            ...(config.targetValue ? { target: config.targetValue } : {})
+          }));
+          setData(localData);
+        }
+      } catch (error) {
+        console.error('Error fetching health data:', error);
+        // In case of error, use local data with targets if needed
+        const localData = data.map(point => ({
+          ...point,
+          ...(config.targetValue ? { target: config.targetValue } : {})
+        }));
+        setData(localData);
       }
-      
-      setData(simulatedData);
-      
-      // In future, this would be replaced with real API calls:
-      // Example: if (dataSource === 'googleFit') fetchGoogleFitData(metric);
-    }
+    };
+    
+    fetchData();
   }, [metric, dataSource]);
 
   return (

@@ -144,7 +144,7 @@ export function WeeklySummaryChart({ metric, className, dataSource = 'local' }: 
             <YAxis className="text-2xs text-gray-500 dark:text-gray-400" />
             <Tooltip 
               formatter={(value: number) => [`${value} ${config.unit}`, config.label]}
-              className="text-xs"
+              // Remove the className prop as it's not supported by the Tooltip component
             />
             <Line 
               type="monotone" 

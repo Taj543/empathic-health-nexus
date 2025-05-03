@@ -1,7 +1,6 @@
 
 import { useState } from "react";
 import { Send, Heart, ThumbsUp } from "lucide-react";
-import { BottomNavigation } from "@/components/health/BottomNavigation";
 
 const EmotionalSupport = () => {
   const [mood, setMood] = useState<string | null>(null);
@@ -89,7 +88,7 @@ const EmotionalSupport = () => {
   };
 
   return (
-    <div className="min-h-screen pb-16 flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <header className="px-6 py-4 bg-white border-b border-gray-200">
         <h1 className="text-xl font-bold">Emotional Support</h1>
         <p className="text-sm text-gray-500">Your compassionate AI companion</p>
@@ -168,8 +167,6 @@ const EmotionalSupport = () => {
           </button>
         </form>
       )}
-
-      <BottomNavigation />
     </div>
   );
 };

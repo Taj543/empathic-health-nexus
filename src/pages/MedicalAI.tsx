@@ -1,7 +1,6 @@
 
 import { useState } from "react";
 import { Send } from "lucide-react";
-import { BottomNavigation } from "@/components/health/BottomNavigation";
 
 const MedicalAI = () => {
   const [messages, setMessages] = useState([
@@ -42,7 +41,7 @@ const MedicalAI = () => {
   };
 
   return (
-    <div className="min-h-screen pb-16 flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <header className="px-6 py-4 bg-white border-b border-gray-200">
         <h1 className="text-xl font-bold">Medical AI Assistant</h1>
         <p className="text-sm text-gray-500">Ask any health-related questions</p>
@@ -97,8 +96,6 @@ const MedicalAI = () => {
           <Send size={18} />
         </button>
       </form>
-
-      <BottomNavigation />
     </div>
   );
 };

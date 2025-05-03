@@ -1,6 +1,5 @@
 
 import { User, Settings, Bell, Shield, HelpCircle, LogOut, ArrowRight } from "lucide-react";
-import { BottomNavigation } from "@/components/health/BottomNavigation";
 
 const Profile = () => {
   const menuItems = [
@@ -74,8 +73,6 @@ const Profile = () => {
           Empathic Health Nexus v1.0.0
         </p>
       </div>
-
-      <BottomNavigation />
     </div>
   );
 };

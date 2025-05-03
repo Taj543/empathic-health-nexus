@@ -1,7 +1,6 @@
 
 import { useState } from "react";
 import { Search, ArrowRight } from "lucide-react";
-import { BottomNavigation } from "@/components/health/BottomNavigation";
 
 const Diagnostics = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -23,7 +22,7 @@ const Diagnostics = () => {
   ];
 
   return (
-    <div className="min-h-screen pb-16">
+    <div className="min-h-screen">
       <header className="px-6 py-4 bg-white border-b border-gray-200">
         <h1 className="text-xl font-bold">Diagnostics</h1>
         <p className="text-sm text-gray-500">Check your symptoms</p>
@@ -83,13 +82,11 @@ const Diagnostics = () => {
         ))}
       </div>
 
-      <div className="px-6 py-2">
+      <div className="px-6 py-2 pb-6">
         <button className="w-full bg-health-primary text-white rounded-full py-3 font-medium">
           Start New Symptom Check
         </button>
       </div>
-
-      <BottomNavigation />
     </div>
   );
 };

@@ -1,10 +1,8 @@
-
 import { useState, useEffect } from "react";
-import { Plus, MessageCircle, Search, Heart, Activity, Bell } from "lucide-react";
+import { Plus, Search, Heart, Activity, BookOpen, User, MessageCircle, Bell } from "lucide-react";
 import { HealthMetricCard } from "@/components/health/HealthMetricCard";
 import { MedicationCard } from "@/components/health/MedicationCard";
 import { ActionButton } from "@/components/health/ActionButton";
-import { BottomNavigation } from "@/components/health/BottomNavigation";
 import { HealthMetricGrid } from "@/components/health/HealthMetricGrid";
 import { MedicationAlarmDialog } from "@/components/health/MedicationAlarmDialog";
 import { WeeklySummaryTabs } from "@/components/health/WeeklySummaryTabs";
@@ -14,6 +12,7 @@ import { useNotificationPermission } from "@/hooks/useNotificationPermission";
 import { useAuth } from "@/hooks/useAuth";
 import { HealthDataSource, fetchHealthSummaryData } from "@/services/healthDataService";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Link } from "react-router-dom";
 
 interface Medication {
   id: number;
@@ -293,34 +292,47 @@ const Index = () => {
           {/* Quick Actions */}
           <div className="mt-3">
             <h2 className="text-sm font-semibold mb-1.5">Quick Actions</h2>
-            <div className="grid grid-cols-4 gap-1.5 max-w-xs mx-auto">
+            <div className="grid grid-cols-5 gap-1.5 max-w-xs mx-auto">
               <ActionButton
                 icon={<Plus size={16} />}
                 label="Meds"
                 onClick={handleAddMedication}
               />
-              <ActionButton
-                icon={<Bell size={16} />}
-                label="Alarms"
-                onClick={() => setShowPermissionDialog(true)}
-              />
-              <ActionButton
-                icon={<MessageCircle size={16} />}
-                label="Chat"
-              />
-              <ActionButton
-                icon={<Search size={16} />}
-                label="Search"
-              />
+              <Link to="/emotional">
+                <ActionButton
+                  icon={<Heart size={16} />}
+                  label="Emotional"
+                />
+              </Link>
+              <Link to="/diagnostics">
+                <ActionButton
+                  icon={<Activity size={16} />}
+                  label="Diagnostics"
+                />
+              </Link>
+              <Link to="/knowledge">
+                <ActionButton
+                  icon={<BookOpen size={16} />}
+                  label="Knowledge"
+                />
+              </Link>
+              <Link to="/profile">
+                <ActionButton
+                  icon={<User size={16} />}
+                  label="Profile"
+                />
+              </Link>
             </div>
           </div>
         </div>
       </ScrollArea>
 
       {/* Add Floating Action Button (FAB) for VaidyaMind medical bot */}
-      <button className="fab">
-        <MessageCircle size={24} />
-      </button>
+      <Link to="/medical-ai">
+        <button className="fab">
+          <MessageCircle size={24} />
+        </button>
+      </Link>
 
       {/* Medication Alarm Dialog */}
       <MedicationAlarmDialog
@@ -335,9 +347,6 @@ const Index = () => {
         open={showPermissionDialog}
         onOpenChange={setShowPermissionDialog}
       />
-
-      {/* Bottom Navigation */}
-      <BottomNavigation />
     </div>
   );
 };

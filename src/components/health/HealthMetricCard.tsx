@@ -25,13 +25,13 @@ export function HealthMetricCard({
   };
 
   return (
-    <div className={cn("android-card flex flex-col elevation-1 py-3 px-3", className)}>
-      <div className="flex justify-between items-center mb-1">
-        <div className="flex items-center gap-1.5">
-          {icon && <div className="text-health-accent bg-health-accent/10 p-1 rounded-full">{icon}</div>}
-          <h3 className="text-sm font-medium">{title}</h3>
+    <div className={cn("android-card flex flex-col elevation-1 py-2 px-2.5", className)}>
+      <div className="flex justify-between items-center mb-0.5">
+        <div className="flex items-center gap-1">
+          {icon && <div className="text-health-accent bg-health-accent/10 p-0.5 rounded-full">{icon}</div>}
+          <h3 className="text-xs font-medium">{title}</h3>
         </div>
-        <span className={cn(statusClass[status], "text-2xs px-1.5 py-0.5 rounded-full", {
+        <span className={cn(statusClass[status], "text-2xs px-1 py-0.5 rounded-full", {
           "bg-green-50": status === "normal",
           "bg-yellow-50": status === "warning",
           "bg-red-50": status === "alert"
@@ -39,9 +39,9 @@ export function HealthMetricCard({
           {status === "normal" ? "Normal" : status === "warning" ? "Warning" : "Alert"}
         </span>
       </div>
-      <div className="flex items-baseline mt-0.5">
-        <span className="text-2xl font-bold">{value}</span>
-        {unit && <span className="ml-1 text-xs text-gray-500">{unit}</span>}
+      <div className="flex items-baseline">
+        <span className="text-lg font-bold">{value}</span>
+        {unit && <span className="ml-1 text-2xs text-gray-500">{unit}</span>}
       </div>
     </div>
   );

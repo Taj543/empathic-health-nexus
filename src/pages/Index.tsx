@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Plus, MessageCircle, Search, Heart, Activity, Bell } from "lucide-react";
 import { HealthMetricCard } from "@/components/health/HealthMetricCard";
@@ -185,14 +184,14 @@ const Index = () => {
   return (
     <div className="flex flex-col h-full overflow-hidden">
       {/* Header */}
-      <header className="px-6 pt-8 pb-4 bg-white dark:bg-gray-900 elevation-1 z-10">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+      <header className="px-4 pt-6 pb-3 bg-white dark:bg-gray-900 elevation-1 z-10">
+        <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100">
           Welcome back, {user?.name || "User"}
         </h1>
-        <p className="text-gray-600 dark:text-gray-400">
+        <p className="text-xs text-gray-600 dark:text-gray-400">
           Here's your health overview
           {dataSource !== 'local' && (
-            <span className="ml-2 text-xs bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded-full">
+            <span className="ml-1.5 text-2xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded-full">
               Connected to {dataSource}
             </span>
           )}
@@ -201,17 +200,17 @@ const Index = () => {
 
       {/* Scrollable Content Area */}
       <ScrollArea className="flex-1 overflow-y-auto overscroll-behavior-y-contain">
-        <div className="px-6 pt-4 pb-24">
+        <div className="px-4 pt-3 pb-20 max-w-md mx-auto">
           {/* Health Metrics Categories */}
-          <div className="mb-6">
-            <h2 className="text-xl font-semibold mb-3">Core Health Vitals</h2>
+          <div className="mb-4">
+            <h2 className="text-lg font-semibold mb-2">Core Health Vitals</h2>
             <HealthMetricGrid scrollable={true}>
               <HealthMetricCard
                 title="Heart Rate"
                 value={healthMetrics.heartRate}
                 unit="bpm"
                 status="normal"
-                icon={<Heart size={20} />}
+                icon={<Heart size={16} />}
               />
               <HealthMetricCard
                 title="Blood Pressure"
@@ -234,14 +233,14 @@ const Index = () => {
             </HealthMetricGrid>
           </div>
 
-          <div className="mb-6">
-            <h2 className="text-xl font-semibold mb-3">Activity</h2>
+          <div className="mb-4">
+            <h2 className="text-lg font-semibold mb-2">Activity</h2>
             <HealthMetricGrid>
               <HealthMetricCard
                 title="Steps"
                 value={healthMetrics.steps.toLocaleString()}
                 status="normal"
-                icon={<Activity size={20} />}
+                icon={<Activity size={16} />}
               />
               <HealthMetricCard
                 title="Calories"
@@ -253,12 +252,12 @@ const Index = () => {
           </div>
 
           {/* Medications and Weekly Summary */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-4">
             {/* Medications */}
             <div className="material-card">
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-lg font-semibold">Today's Medications</h2>
-                <button className="text-health-accent text-sm android-ripple px-2 py-1 rounded-full">See All</button>
+              <div className="flex justify-between items-center mb-2">
+                <h2 className="text-base font-semibold">Today's Medications</h2>
+                <button className="text-health-accent text-2xs android-ripple px-1.5 py-0.5 rounded-full">See All</button>
               </div>
               <div className="divide-y divide-gray-100 dark:divide-gray-800">
                 {medications.map((med) => (
@@ -277,9 +276,9 @@ const Index = () => {
               </div>
               <button 
                 onClick={handleAddMedication}
-                className="mt-4 w-full py-3 border border-dashed border-gray-300 dark:border-gray-700 rounded-lg flex items-center justify-center text-health-accent hover:bg-gray-50 dark:hover:bg-gray-800 android-ripple"
+                className="mt-3 w-full py-2 border border-dashed border-gray-300 dark:border-gray-700 rounded-lg flex items-center justify-center text-health-accent hover:bg-gray-50 dark:hover:bg-gray-800 android-ripple"
               >
-                <Plus size={16} className="mr-1" />
+                <Plus size={14} className="mr-1" />
                 Add Medication
               </button>
             </div>
@@ -291,21 +290,21 @@ const Index = () => {
           </div>
 
           {/* Quick Actions */}
-          <div className="mt-6">
-            <h2 className="text-xl font-semibold mb-4">Quick Actions</h2>
-            <div className="grid grid-cols-3 gap-3">
+          <div className="mt-4">
+            <h2 className="text-lg font-semibold mb-2">Quick Actions</h2>
+            <div className="grid grid-cols-3 gap-2 max-w-xs mx-auto">
               <ActionButton
-                icon={<Plus size={24} />}
+                icon={<Plus size={18} />}
                 label="Meds"
                 onClick={handleAddMedication}
               />
               <ActionButton
-                icon={<Bell size={24} />}
+                icon={<Bell size={18} />}
                 label="Alarms"
                 onClick={() => setShowPermissionDialog(true)}
               />
               <ActionButton
-                icon={<MessageCircle size={24} />}
+                icon={<MessageCircle size={18} />}
                 label="Chat"
               />
             </div>
@@ -315,7 +314,7 @@ const Index = () => {
 
       {/* Add Floating Action Button (FAB) */}
       <button className="fab">
-        <Plus size={24} />
+        <Plus size={18} />
       </button>
 
       {/* Medication Alarm Dialog */}

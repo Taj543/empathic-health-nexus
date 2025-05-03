@@ -7,8 +7,20 @@ import { cn } from "@/lib/utils";
 import { HealthDataSourceSelector } from "./HealthDataSourceSelector";
 import { HealthDataSource } from "@/services/healthDataService";
 
-export function WeeklySummaryTabs() {
+interface WeeklySummaryTabsProps {
+  onDataSourceChange?: (source: HealthDataSource) => void;
+}
+
+export function WeeklySummaryTabs({ onDataSourceChange }: WeeklySummaryTabsProps) {
   const [dataSource, setDataSource] = useState<HealthDataSource>('local');
+  
+  // Update the data source and notify parent component if callback is provided
+  const handleDataSourceChange = (source: HealthDataSource) => {
+    setDataSource(source);
+    if (onDataSourceChange) {
+      onDataSourceChange(source);
+    }
+  };
   
   return (
     <Tabs defaultValue="heartRate" className="w-full">
@@ -49,7 +61,7 @@ export function WeeklySummaryTabs() {
       <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm border border-gray-100 dark:border-gray-700">
         <HealthDataSourceSelector 
           selectedSource={dataSource} 
-          onSourceSelect={(sourceId) => setDataSource(sourceId as HealthDataSource)} 
+          onSourceSelect={(sourceId) => handleDataSourceChange(sourceId as HealthDataSource)} 
           className="mb-4"
         />
         

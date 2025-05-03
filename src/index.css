@@ -75,7 +75,7 @@
   html {
     @apply overflow-hidden h-full;
     -webkit-tap-highlight-color: transparent;
-    font-size: 14px; /* Smaller base font size for Android-like UI */
+    font-size: 14px; /* Base font size for Android-like UI */
   }
 
   body {
@@ -89,7 +89,7 @@
 
   /* Health specific styles */
   .health-card {
-    @apply rounded-lg border bg-card p-3 shadow-sm transition-all hover:shadow-md;
+    @apply rounded-3xl border bg-card p-3 shadow-sm transition-all hover:shadow-md;
   }
 
   .status-normal {
@@ -137,12 +137,12 @@
   
   /* Material design inspired card */
   .material-card {
-    @apply rounded-lg bg-white dark:bg-gray-800 shadow-sm border-none p-3;
+    @apply rounded-3xl bg-white dark:bg-gray-800 shadow-sm border-none p-3;
   }
   
   /* Material FAB button */
   .fab {
-    @apply fixed bottom-20 right-4 w-12 h-12 rounded-full bg-health-primary text-white flex items-center justify-center shadow-lg z-30 android-ripple;
+    @apply fixed bottom-20 right-4 w-14 h-14 rounded-full bg-health-primary text-white flex items-center justify-center shadow-lg z-30 android-ripple;
   }
 
   /* Android-specific scrolling */
@@ -180,7 +180,7 @@
   
   /* Card with rounded corners and shadow */
   .android-card {
-    @apply rounded-lg bg-white dark:bg-gray-800 shadow-sm p-3 border-none;
+    @apply rounded-3xl bg-white dark:bg-gray-800 shadow-sm p-2.5 border-none;
   }
   
   /* Add text-2xs for very small text */

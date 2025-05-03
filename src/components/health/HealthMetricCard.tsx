@@ -25,10 +25,10 @@ export function HealthMetricCard({
   };
 
   return (
-    <div className={cn("android-card flex flex-col elevation-1 py-2 px-2.5", className)}>
+    <div className={cn("android-card flex flex-col elevation-1 py-2 px-2", className)}>
       <div className="flex justify-between items-center mb-0.5">
         <div className="flex items-center gap-1">
-          {icon && <div className="text-health-accent bg-health-accent/10 p-0.5 rounded-full">{icon}</div>}
+          {icon && <div className="text-health-accent bg-health-accent/10 p-0.5 rounded-full text-[14px]">{icon}</div>}
           <h3 className="text-xs font-medium">{title}</h3>
         </div>
         <span className={cn(statusClass[status], "text-2xs px-1 py-0.5 rounded-full", {
@@ -40,7 +40,7 @@ export function HealthMetricCard({
         </span>
       </div>
       <div className="flex items-baseline">
-        <span className="text-lg font-bold">{value}</span>
+        <span className="text-base font-bold">{value}</span>
         {unit && <span className="ml-1 text-2xs text-gray-500">{unit}</span>}
       </div>
     </div>

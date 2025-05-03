@@ -123,16 +123,16 @@ export function WeeklySummaryChart({ metric, className, dataSource = 'local' }: 
 
   return (
     <div className={cn("w-full", className)}>
-      <div className="flex justify-between items-center mb-2">
-        <div className="text-sm font-medium text-gray-500">
+      <div className="flex justify-between items-center mb-1">
+        <div className="text-xs font-medium text-gray-500">
           {config.label}
-          {dataSource !== 'local' && <span className="ml-2 text-xs bg-gray-100 px-2 py-0.5 rounded-full">{dataSource}</span>}
+          {dataSource !== 'local' && <span className="ml-2 text-2xs bg-gray-100 px-1.5 py-0.5 rounded-full">{dataSource}</span>}
         </div>
-        <div className="text-sm text-gray-500">
+        <div className="text-xs text-gray-500">
           Target: {config.targetValue} {config.unit}
         </div>
       </div>
-      <ResponsiveContainer width="100%" height={200}>
+      <ResponsiveContainer width="100%" height={180}>
         {isLoading ? (
           <div className="flex items-center justify-center h-full">
             <div className="text-sm text-gray-500">Loading data...</div>
@@ -140,10 +140,11 @@ export function WeeklySummaryChart({ metric, className, dataSource = 'local' }: 
         ) : (
           <ComposedChart data={data}>
             <CartesianGrid strokeDasharray="3 3" className="stroke-gray-200 dark:stroke-gray-700" />
-            <XAxis dataKey="time" className="text-xs text-gray-500 dark:text-gray-400" />
-            <YAxis className="text-xs text-gray-500 dark:text-gray-400" />
+            <XAxis dataKey="time" className="text-2xs text-gray-500 dark:text-gray-400" />
+            <YAxis className="text-2xs text-gray-500 dark:text-gray-400" />
             <Tooltip 
               formatter={(value: number) => [`${value} ${config.unit}`, config.label]}
+              className="text-xs"
             />
             <Line 
               type="monotone" 
@@ -151,6 +152,7 @@ export function WeeklySummaryChart({ metric, className, dataSource = 'local' }: 
               stroke={config.color} 
               strokeWidth={2} 
               dot={false} 
+              activeDot={{ r: 4, className: "animate-pulse" }}
             />
             {config.targetValue && (
               <ReferenceLine 
@@ -160,7 +162,7 @@ export function WeeklySummaryChart({ metric, className, dataSource = 'local' }: 
                 label={{ 
                   value: `Target: ${config.targetValue} ${config.unit}`,
                   fill: '#FF8C00',
-                  fontSize: 10,
+                  fontSize: 8,
                   position: 'insideBottomRight'
                 }} 
               />

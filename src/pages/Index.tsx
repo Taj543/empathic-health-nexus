@@ -8,7 +8,10 @@ import { BottomNavigation } from "@/components/health/BottomNavigation";
 import { HealthMetricGrid } from "@/components/health/HealthMetricGrid";
 import { MedicationAlarmDialog } from "@/components/health/MedicationAlarmDialog";
 import { WeeklySummaryTabs } from "@/components/health/WeeklySummaryTabs";
+import { NotificationPermissionDialog } from "@/components/health/NotificationPermissionDialog";
 import { useToast } from "@/hooks/use-toast";
+import { useNotificationPermission } from "@/hooks/useNotificationPermission";
+import { useAuth } from "@/hooks/useAuth";
 import { HealthDataSource, fetchHealthSummaryData } from "@/services/healthDataService";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
@@ -23,6 +26,9 @@ interface Medication {
 
 const Index = () => {
   const { toast } = useToast();
+  const { user } = useAuth();
+  const { permission } = useNotificationPermission();
+  
   const [medications, setMedications] = useState<Medication[]>([
     { 
       id: 1, 
@@ -52,6 +58,20 @@ const Index = () => {
   });
   
   const [isLoading, setIsLoading] = useState(false);
+  const [showPermissionDialog, setShowPermissionDialog] = useState(false);
+
+  // Check if we should prompt for notification permissions
+  useEffect(() => {
+    // Only show the permission dialog if it hasn't been decided yet
+    if (permission === "default" && medications.some(med => med.alarms.length > 0)) {
+      // Wait a moment before showing the dialog for better UX
+      const timer = setTimeout(() => {
+        setShowPermissionDialog(true);
+      }, 2000);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [permission, medications]);
 
   // Fetch health summary data when data source changes
   useEffect(() => {
@@ -139,6 +159,11 @@ const Index = () => {
   };
   
   const handleAddAlarm = (medicationId: number) => {
+    // If notification permission is not granted, show the dialog
+    if (permission !== "granted") {
+      setShowPermissionDialog(true);
+    }
+    
     const medication = medications.find(m => m.id === medicationId);
     if (medication) {
       setSelectedMedication(medication);
@@ -161,7 +186,9 @@ const Index = () => {
     <div className="flex flex-col h-full overflow-hidden">
       {/* Header */}
       <header className="px-6 pt-8 pb-4 bg-white dark:bg-gray-900 elevation-1 z-10">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Welcome back, Demo User</h1>
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+          Welcome back, {user?.name || "User"}
+        </h1>
         <p className="text-gray-600 dark:text-gray-400">
           Here's your health overview
           {dataSource !== 'local' && (
@@ -275,6 +302,7 @@ const Index = () => {
               <ActionButton
                 icon={<Bell size={24} />}
                 label="Alarms"
+                onClick={() => setShowPermissionDialog(true)}
               />
               <ActionButton
                 icon={<MessageCircle size={24} />}
@@ -296,6 +324,12 @@ const Index = () => {
         onOpenChange={setDialogOpen}
         medication={selectedMedication}
         onSave={handleSaveMedication}
+      />
+      
+      {/* Notification Permission Dialog */}
+      <NotificationPermissionDialog
+        open={showPermissionDialog}
+        onOpenChange={setShowPermissionDialog}
       />
 
       {/* Bottom Navigation */}

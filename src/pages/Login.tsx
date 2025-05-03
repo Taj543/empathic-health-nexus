@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { Google, LogIn, User } from "lucide-react";
+import { LogIn, Globe, User } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -111,7 +111,7 @@ export default function Login() {
             onClick={handleGoogleLogin} 
             className="w-full h-12 text-base"
           >
-            <Google className="mr-2 h-4 w-4" />
+            <Globe className="mr-2 h-4 w-4" />
             Google
           </Button>
         </CardContent>

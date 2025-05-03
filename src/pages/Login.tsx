@@ -54,13 +54,13 @@ export default function Login() {
 
   return (
     <div className="h-full flex items-center justify-center p-4 bg-gradient-to-b from-primary/10 to-secondary/10">
-      <Card className="w-full max-w-md elevation-3 border-none">
-        <CardHeader className="text-center">
+      <Card className="w-full max-w-md elevation-3 border-none shadow-lg">
+        <CardHeader className="text-center pb-4">
           <CardTitle className="text-2xl font-bold">Health Nexus</CardTitle>
           <CardDescription>Sign in to manage your health data</CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleEmailLogin} className="space-y-4">
+          <form onSubmit={handleEmailLogin} className="space-y-5">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input 
@@ -70,7 +70,7 @@ export default function Login() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="h-12"
+                className="h-14 rounded-xl px-4 text-base android-ripple"
               />
             </div>
             <div className="space-y-2">
@@ -81,16 +81,16 @@ export default function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="h-12"
+                className="h-14 rounded-xl px-4 text-base android-ripple"
               />
             </div>
             <Button 
               type="submit" 
-              className="w-full h-12 text-base"
+              className="w-full h-14 text-base font-medium rounded-xl elevation-2 android-ripple"
               disabled={isLoading}
               variant="default"
             >
-              <LogIn className="mr-2 h-4 w-4" />
+              <LogIn className="mr-2 h-5 w-5" />
               Sign In
             </Button>
           </form>
@@ -109,10 +109,10 @@ export default function Login() {
           <Button 
             variant="outline" 
             onClick={handleGoogleLogin} 
-            className="w-full h-12 text-base"
+            className="w-full h-14 text-base font-medium rounded-xl elevation-1 android-ripple border-gray-300"
           >
-            <div className="mr-2 h-4 w-4 flex items-center justify-center">
-              <svg viewBox="0 0 24 24" width="16" height="16" xmlns="http://www.w3.org/2000/svg">
+            <div className="mr-2 h-5 w-5 flex items-center justify-center">
+              <svg viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg">
                 <g transform="matrix(1, 0, 0, 1, 0, 0)">
                   <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
                   <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
@@ -124,7 +124,7 @@ export default function Login() {
             Google
           </Button>
         </CardContent>
-        <CardFooter className="flex justify-center">
+        <CardFooter className="flex justify-center pb-6">
           <p className="text-sm text-muted-foreground">
             Don't have an account?{" "}
             <Button variant="link" className="p-0" onClick={() => navigate("/signup")}>

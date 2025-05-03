@@ -11,11 +11,11 @@ interface HealthMetricGridProps {
 
 export function HealthMetricGrid({ children, className, scrollable = false }: HealthMetricGridProps) {
   return scrollable ? (
-    <ScrollArea className={cn("w-full pr-2", className)}>
-      <div className="grid grid-cols-2 gap-3 w-full pb-2">
+    <div className={cn("w-full overflow-x-auto android-scroll scrollbar-none pb-2 -mx-2 px-2", className)}>
+      <div className="grid grid-flow-col auto-cols-[250px] md:auto-cols-[270px] gap-3 w-max">
         {children}
       </div>
-    </ScrollArea>
+    </div>
   ) : (
     <div className={cn("grid grid-cols-2 gap-3", className)}>
       {children}

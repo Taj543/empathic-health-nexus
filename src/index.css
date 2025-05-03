@@ -74,6 +74,7 @@
 
   html {
     @apply overflow-hidden h-full;
+    -webkit-tap-highlight-color: transparent;
   }
 
   body {
@@ -140,6 +141,50 @@
   
   /* Material FAB button */
   .fab {
-    @apply fixed bottom-20 right-6 w-14 h-14 rounded-full bg-health-primary text-white flex items-center justify-center shadow-lg;
+    @apply fixed bottom-20 right-6 w-14 h-14 rounded-full bg-health-primary text-white flex items-center justify-center shadow-lg z-30 android-ripple;
+  }
+
+  /* Android-specific scrolling */
+  .android-scroll {
+    @apply scrollbar-none overscroll-none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Android material touch feedback */
+  .material-touch {
+    @apply transition-transform active:scale-95;
+  }
+
+  /* Hide scrollbars */
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Android text styles */
+  .android-text-title {
+    @apply text-lg font-medium;
+  }
+
+  .android-text-subtitle {
+    @apply text-base font-normal text-gray-700 dark:text-gray-300;
+  }
+
+  .android-text-body {
+    @apply text-sm text-gray-600 dark:text-gray-400;
+  }
+  
+  /* Card with rounded corners and shadow */
+  .android-card {
+    @apply rounded-2xl bg-white dark:bg-gray-800 shadow-md p-4 border-none;
+  }
+}
+
+@layer utilities {
+  .tap-highlight-none {
+    -webkit-tap-highlight-color: transparent;
   }
 }

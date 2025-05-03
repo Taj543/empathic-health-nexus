@@ -2,10 +2,11 @@
 import React, { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { WeeklySummaryChart } from "./WeeklySummaryChart";
-import { Heart, Activity, BarChart } from "lucide-react";
+import { Heart, Activity, BarChart, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { HealthDataSourceSelector } from "./HealthDataSourceSelector";
 import { HealthDataSource } from "@/services/healthDataService";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface WeeklySummaryTabsProps {
   onDataSourceChange?: (source: HealthDataSource) => void;
@@ -26,39 +27,41 @@ export function WeeklySummaryTabs({ onDataSourceChange }: WeeklySummaryTabsProps
     <Tabs defaultValue="heartRate" className="w-full">
       <div className="mb-4">
         <h2 className="text-xl font-semibold mb-3">Weekly Health Summary</h2>
-        <TabsList className="w-full bg-muted grid grid-cols-4 h-auto p-1">
-          <TabsTrigger 
-            value="heartRate" 
-            className="flex flex-col items-center gap-1 py-2 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800"
-          >
-            <Heart size={16} className="text-health-danger" />
-            <span className="text-xs">Heart</span>
-          </TabsTrigger>
-          <TabsTrigger 
-            value="bloodPressure"
-            className="flex flex-col items-center gap-1 py-2 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800"
-          >
-            <BarChart size={16} className="text-health-primary" />
-            <span className="text-xs">BP</span>
-          </TabsTrigger>
-          <TabsTrigger 
-            value="spO2"
-            className="flex flex-col items-center gap-1 py-2 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800"
-          >
-            <Activity size={16} className="text-health-success" />
-            <span className="text-xs">SpO₂</span>
-          </TabsTrigger>
-          <TabsTrigger 
-            value="activity"
-            className="flex flex-col items-center gap-1 py-2 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800"
-          >
-            <Activity size={16} className="text-health-accent" />
-            <span className="text-xs">Activity</span>
-          </TabsTrigger>
-        </TabsList>
+        <ScrollArea className="w-full">
+          <TabsList className="w-full bg-background border-b border-gray-200 dark:border-gray-700 rounded-none h-auto p-0 flex">
+            <TabsTrigger 
+              value="heartRate" 
+              className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-none data-[state=active]:border-b-2 data-[state=active]:border-health-primary data-[state=active]:bg-transparent"
+            >
+              <Heart size={16} className="text-health-danger" />
+              <span>Heart</span>
+            </TabsTrigger>
+            <TabsTrigger 
+              value="bloodPressure"
+              className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-none data-[state=active]:border-b-2 data-[state=active]:border-health-primary data-[state=active]:bg-transparent"
+            >
+              <BarChart size={16} className="text-health-primary" />
+              <span>BP</span>
+            </TabsTrigger>
+            <TabsTrigger 
+              value="spO2"
+              className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-none data-[state=active]:border-b-2 data-[state=active]:border-health-primary data-[state=active]:bg-transparent"
+            >
+              <Activity size={16} className="text-health-success" />
+              <span>SpO₂</span>
+            </TabsTrigger>
+            <TabsTrigger 
+              value="activity"
+              className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-none data-[state=active]:border-b-2 data-[state=active]:border-health-primary data-[state=active]:bg-transparent"
+            >
+              <Activity size={16} className="text-health-accent" />
+              <span>Activity</span>
+            </TabsTrigger>
+          </TabsList>
+        </ScrollArea>
       </div>
 
-      <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm border border-gray-100 dark:border-gray-700">
+      <div className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-100 dark:border-gray-700">
         <HealthDataSourceSelector 
           selectedSource={dataSource} 
           onSourceSelect={(sourceId) => handleDataSourceChange(sourceId as HealthDataSource)} 
@@ -79,9 +82,9 @@ export function WeeklySummaryTabs({ onDataSourceChange }: WeeklySummaryTabsProps
         
         <TabsContent value="activity" className="mt-0">
           <Tabs defaultValue="steps" className="w-full">
-            <TabsList className="w-full bg-muted mb-4">
-              <TabsTrigger value="steps" className="flex-1">Steps</TabsTrigger>
-              <TabsTrigger value="calories" className="flex-1">Calories</TabsTrigger>
+            <TabsList className="w-full mb-4 rounded-full overflow-hidden bg-gray-100 p-1">
+              <TabsTrigger value="steps" className="flex-1 rounded-full">Steps</TabsTrigger>
+              <TabsTrigger value="calories" className="flex-1 rounded-full">Calories</TabsTrigger>
             </TabsList>
             
             <TabsContent value="steps" className="mt-0">

@@ -72,9 +72,17 @@
     @apply border-border;
   }
 
+  html {
+    @apply overflow-hidden h-full;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground h-full overflow-hidden;
     font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  #root {
+    @apply h-full overflow-hidden;
   }
 
   /* Health specific styles */
@@ -92,5 +100,46 @@
 
   .status-alert {
     @apply text-health-danger font-medium;
+  }
+  
+  /* Android-like styling */
+  .android-ripple {
+    @apply relative overflow-hidden;
+  }
+  
+  .android-ripple::after {
+    content: '';
+    @apply absolute inset-0 bg-current opacity-0 pointer-events-none transition-opacity duration-300;
+  }
+  
+  .android-ripple:active::after {
+    @apply opacity-10;
+  }
+  
+  /* Android-inspired elevation shadows */
+  .elevation-1 {
+    @apply shadow-sm;
+  }
+  
+  .elevation-2 {
+    @apply shadow;
+  }
+  
+  .elevation-3 {
+    @apply shadow-md;
+  }
+  
+  .elevation-4 {
+    @apply shadow-lg;
+  }
+  
+  /* Material design inspired card */
+  .material-card {
+    @apply rounded-xl bg-white dark:bg-gray-800 shadow-sm border-none p-4;
+  }
+  
+  /* Material FAB button */
+  .fab {
+    @apply fixed bottom-20 right-6 w-14 h-14 rounded-full bg-health-primary text-white flex items-center justify-center shadow-lg;
   }
 }

@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Plus, MessageCircle, Search, Heart, Activity, Bell } from "lucide-react";
 import { HealthMetricCard } from "@/components/health/HealthMetricCard";
@@ -9,6 +10,7 @@ import { MedicationAlarmDialog } from "@/components/health/MedicationAlarmDialog
 import { WeeklySummaryTabs } from "@/components/health/WeeklySummaryTabs";
 import { useToast } from "@/hooks/use-toast";
 import { HealthDataSource, fetchHealthSummaryData } from "@/services/healthDataService";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface Medication {
   id: number;
@@ -48,11 +50,14 @@ const Index = () => {
     steps: 8432,
     calories: 1250
   });
+  
+  const [isLoading, setIsLoading] = useState(false);
 
   // Fetch health summary data when data source changes
   useEffect(() => {
     const fetchSummaryData = async () => {
       try {
+        setIsLoading(true);
         const summaryData = await fetchHealthSummaryData(dataSource);
         setHealthMetrics({
           heartRate: summaryData.heartRate,
@@ -64,6 +69,8 @@ const Index = () => {
         });
       } catch (error) {
         console.error("Error fetching health summary data:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
     
@@ -151,127 +158,137 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen pb-16">
+    <div className="flex flex-col h-full overflow-hidden">
       {/* Header */}
-      <header className="px-6 pt-8 pb-4">
-        <h1 className="text-2xl font-bold text-gray-900">Welcome back, Demo User</h1>
-        <p className="text-gray-600">
+      <header className="px-6 pt-8 pb-4 bg-white dark:bg-gray-900 elevation-1 z-10">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Welcome back, Demo User</h1>
+        <p className="text-gray-600 dark:text-gray-400">
           Here's your health overview
           {dataSource !== 'local' && (
-            <span className="ml-2 text-xs bg-gray-100 px-2 py-0.5 rounded-full">
+            <span className="ml-2 text-xs bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded-full">
               Connected to {dataSource}
             </span>
           )}
         </p>
       </header>
 
-      {/* Health Metrics Categories */}
-      <div className="px-6">
-        <h2 className="text-xl font-semibold mb-3">Core Health Vitals</h2>
-        <HealthMetricGrid>
-          <HealthMetricCard
-            title="Heart Rate"
-            value={healthMetrics.heartRate}
-            unit="bpm"
-            status="normal"
-            icon={<Heart size={20} />}
-          />
-          <HealthMetricCard
-            title="Blood Pressure"
-            value={healthMetrics.bloodPressure}
-            unit="mmHg"
-            status="normal"
-          />
-          <HealthMetricCard
-            title="SpO₂"
-            value={healthMetrics.spO2}
-            unit="%"
-            status="normal"
-          />
-          <HealthMetricCard
-            title="Respiratory Rate"
-            value={healthMetrics.respiratoryRate}
-            unit="bpm"
-            status="normal"
-          />
-        </HealthMetricGrid>
-      </div>
-
-      <div className="px-6 mt-6">
-        <h2 className="text-xl font-semibold mb-3">Activity</h2>
-        <HealthMetricGrid>
-          <HealthMetricCard
-            title="Steps"
-            value={healthMetrics.steps.toLocaleString()}
-            status="normal"
-            icon={<Activity size={20} />}
-          />
-          <HealthMetricCard
-            title="Calories"
-            value={healthMetrics.calories}
-            unit="kcal"
-            status="normal"
-          />
-        </HealthMetricGrid>
-      </div>
-
-      {/* Medications and Weekly Summary */}
-      <div className="px-6 mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Medications */}
-        <div className="health-card">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-semibold">Today's Medications</h2>
-            <button className="text-health-accent text-sm">See All</button>
-          </div>
-          <div className="divide-y divide-gray-100">
-            {medications.map((med) => (
-              <MedicationCard
-                key={med.id}
-                name={med.name}
-                dosage={med.dosage}
-                taken={med.taken}
-                onToggle={() => toggleMedication(med.id)}
-                alarms={med.alarms}
-                onToggleAlarm={(alarmId) => toggleMedicationAlarm(med.id, alarmId)}
-                onAddAlarm={() => handleAddAlarm(med.id)}
-                onEditMedication={() => handleEditMedication(med)}
+      {/* Scrollable Content Area */}
+      <ScrollArea className="flex-1 overflow-y-auto overscroll-behavior-y-contain">
+        <div className="px-6 pt-4 pb-24">
+          {/* Health Metrics Categories */}
+          <div className="mb-6">
+            <h2 className="text-xl font-semibold mb-3">Core Health Vitals</h2>
+            <HealthMetricGrid scrollable={true}>
+              <HealthMetricCard
+                title="Heart Rate"
+                value={healthMetrics.heartRate}
+                unit="bpm"
+                status="normal"
+                icon={<Heart size={20} />}
               />
-            ))}
+              <HealthMetricCard
+                title="Blood Pressure"
+                value={healthMetrics.bloodPressure}
+                unit="mmHg"
+                status="normal"
+              />
+              <HealthMetricCard
+                title="SpO₂"
+                value={healthMetrics.spO2}
+                unit="%"
+                status="normal"
+              />
+              <HealthMetricCard
+                title="Respiratory Rate"
+                value={healthMetrics.respiratoryRate}
+                unit="bpm"
+                status="normal"
+              />
+            </HealthMetricGrid>
           </div>
-          <button 
-            onClick={handleAddMedication}
-            className="mt-4 w-full py-3 border border-dashed border-gray-300 rounded-lg flex items-center justify-center text-health-accent hover:bg-gray-50"
-          >
-            <Plus size={16} className="mr-1" />
-            Add Medication
-          </button>
-        </div>
 
-        {/* Weekly Summary */}
-        <div className="health-card">
-          <WeeklySummaryTabs onDataSourceChange={handleDataSourceChange} />
-        </div>
-      </div>
+          <div className="mb-6">
+            <h2 className="text-xl font-semibold mb-3">Activity</h2>
+            <HealthMetricGrid>
+              <HealthMetricCard
+                title="Steps"
+                value={healthMetrics.steps.toLocaleString()}
+                status="normal"
+                icon={<Activity size={20} />}
+              />
+              <HealthMetricCard
+                title="Calories"
+                value={healthMetrics.calories}
+                unit="kcal"
+                status="normal"
+              />
+            </HealthMetricGrid>
+          </div>
 
-      {/* Quick Actions */}
-      <div className="px-6 mt-6">
-        <h2 className="text-xl font-semibold mb-4">Quick Actions</h2>
-        <div className="grid grid-cols-3 gap-3">
-          <ActionButton
-            icon={<Plus size={24} />}
-            label="Meds"
-            onClick={handleAddMedication}
-          />
-          <ActionButton
-            icon={<Bell size={24} />}
-            label="Alarms"
-          />
-          <ActionButton
-            icon={<MessageCircle size={24} />}
-            label="Chat"
-          />
+          {/* Medications and Weekly Summary */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Medications */}
+            <div className="material-card">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-lg font-semibold">Today's Medications</h2>
+                <button className="text-health-accent text-sm android-ripple px-2 py-1 rounded-full">See All</button>
+              </div>
+              <div className="divide-y divide-gray-100 dark:divide-gray-800">
+                {medications.map((med) => (
+                  <MedicationCard
+                    key={med.id}
+                    name={med.name}
+                    dosage={med.dosage}
+                    taken={med.taken}
+                    onToggle={() => toggleMedication(med.id)}
+                    alarms={med.alarms}
+                    onToggleAlarm={(alarmId) => toggleMedicationAlarm(med.id, alarmId)}
+                    onAddAlarm={() => handleAddAlarm(med.id)}
+                    onEditMedication={() => handleEditMedication(med)}
+                  />
+                ))}
+              </div>
+              <button 
+                onClick={handleAddMedication}
+                className="mt-4 w-full py-3 border border-dashed border-gray-300 dark:border-gray-700 rounded-lg flex items-center justify-center text-health-accent hover:bg-gray-50 dark:hover:bg-gray-800 android-ripple"
+              >
+                <Plus size={16} className="mr-1" />
+                Add Medication
+              </button>
+            </div>
+
+            {/* Weekly Summary */}
+            <div className="material-card">
+              <WeeklySummaryTabs onDataSourceChange={handleDataSourceChange} />
+            </div>
+          </div>
+
+          {/* Quick Actions */}
+          <div className="mt-6">
+            <h2 className="text-xl font-semibold mb-4">Quick Actions</h2>
+            <div className="grid grid-cols-3 gap-3">
+              <ActionButton
+                icon={<Plus size={24} />}
+                label="Meds"
+                onClick={handleAddMedication}
+              />
+              <ActionButton
+                icon={<Bell size={24} />}
+                label="Alarms"
+              />
+              <ActionButton
+                icon={<MessageCircle size={24} />}
+                label="Chat"
+              />
+            </div>
+          </div>
         </div>
-      </div>
+      </ScrollArea>
+
+      {/* Add Floating Action Button (FAB) */}
+      <button className="fab">
+        <Plus size={24} />
+      </button>
 
       {/* Medication Alarm Dialog */}
       <MedicationAlarmDialog

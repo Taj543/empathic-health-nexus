@@ -33,7 +33,7 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 201 77% 52%;
 
-    --radius: 0.75rem;
+    --radius: 0.5rem;
   }
 
   .dark {
@@ -75,6 +75,7 @@
   html {
     @apply overflow-hidden h-full;
     -webkit-tap-highlight-color: transparent;
+    font-size: 14px; /* Smaller base font size for Android-like UI */
   }
 
   body {
@@ -88,7 +89,7 @@
 
   /* Health specific styles */
   .health-card {
-    @apply rounded-xl border bg-card p-4 shadow-sm transition-all hover:shadow-md;
+    @apply rounded-lg border bg-card p-3 shadow-sm transition-all hover:shadow-md;
   }
 
   .status-normal {
@@ -136,12 +137,12 @@
   
   /* Material design inspired card */
   .material-card {
-    @apply rounded-xl bg-white dark:bg-gray-800 shadow-sm border-none p-4;
+    @apply rounded-lg bg-white dark:bg-gray-800 shadow-sm border-none p-3;
   }
   
   /* Material FAB button */
   .fab {
-    @apply fixed bottom-20 right-6 w-14 h-14 rounded-full bg-health-primary text-white flex items-center justify-center shadow-lg z-30 android-ripple;
+    @apply fixed bottom-20 right-4 w-12 h-12 rounded-full bg-health-primary text-white flex items-center justify-center shadow-lg z-30 android-ripple;
   }
 
   /* Android-specific scrolling */
@@ -166,20 +167,26 @@
 
   /* Android text styles */
   .android-text-title {
-    @apply text-lg font-medium;
+    @apply text-base font-medium;
   }
 
   .android-text-subtitle {
-    @apply text-base font-normal text-gray-700 dark:text-gray-300;
+    @apply text-sm font-normal text-gray-700 dark:text-gray-300;
   }
 
   .android-text-body {
-    @apply text-sm text-gray-600 dark:text-gray-400;
+    @apply text-xs text-gray-600 dark:text-gray-400;
   }
   
   /* Card with rounded corners and shadow */
   .android-card {
-    @apply rounded-2xl bg-white dark:bg-gray-800 shadow-md p-4 border-none;
+    @apply rounded-lg bg-white dark:bg-gray-800 shadow-sm p-3 border-none;
+  }
+  
+  /* Add text-2xs for very small text */
+  .text-2xs {
+    font-size: 0.65rem;
+    line-height: 1rem;
   }
 }
 

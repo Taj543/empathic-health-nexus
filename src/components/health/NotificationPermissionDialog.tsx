@@ -33,24 +33,24 @@ export function NotificationPermissionDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[425px] rounded-2xl border-none shadow-lg">
+      <DialogContent className="sm:max-w-[380px] rounded-xl border-none shadow-lg max-h-[90vh] p-4">
         <DialogHeader>
-          <div className="mx-auto bg-primary/10 p-4 rounded-full w-20 h-20 flex items-center justify-center mb-6">
-            <Bell size={32} className="text-primary" />
+          <div className="mx-auto bg-primary/10 p-3 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+            <Bell size={28} className="text-primary" />
           </div>
-          <DialogTitle className="text-center text-xl font-medium mb-2">Enable Notifications</DialogTitle>
-          <DialogDescription className="text-center text-base">
+          <DialogTitle className="text-center text-lg font-medium mb-1">Enable Notifications</DialogTitle>
+          <DialogDescription className="text-center text-sm">
             {supported 
               ? "Allow medication reminders to help you stay on track with your health regimen."
               : "Your browser doesn't support notifications. Updates will only be visible within the app."}
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter className="sm:justify-center gap-3 mt-6">
+        <DialogFooter className="sm:justify-center gap-2 mt-4">
           <Button
             type="button"
             variant="outline"
             onClick={handleSkip}
-            className="h-12 text-base font-medium rounded-xl"
+            className="h-10 text-sm font-medium rounded-lg"
           >
             Not Now
           </Button>
@@ -58,7 +58,7 @@ export function NotificationPermissionDialog({
             type="button"
             onClick={handleEnableNotifications}
             disabled={!supported || permission === "granted"}
-            className="h-12 text-base font-medium rounded-xl"
+            className="h-10 text-sm font-medium rounded-lg"
           >
             {permission === "granted" ? "Notifications Enabled" : "Enable Notifications"}
           </Button>

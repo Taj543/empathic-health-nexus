@@ -75,7 +75,7 @@
   html {
     @apply overflow-hidden h-full;
     -webkit-tap-highlight-color: transparent;
-    font-size: 14px; /* Base font size for Android-like UI */
+    font-size: 16px; /* Increased base font size */
   }
 
   body {
@@ -89,7 +89,7 @@
 
   /* Health specific styles */
   .health-card {
-    @apply rounded-3xl border bg-card p-3 shadow-sm transition-all hover:shadow-md;
+    @apply rounded-3xl border bg-card p-5 shadow-md transition-all hover:shadow-lg;
   }
 
   .status-normal {
@@ -120,29 +120,29 @@
   
   /* Android-inspired elevation shadows */
   .elevation-1 {
-    @apply shadow-sm;
-  }
-  
-  .elevation-2 {
-    @apply shadow;
-  }
-  
-  .elevation-3 {
     @apply shadow-md;
   }
   
-  .elevation-4 {
+  .elevation-2 {
     @apply shadow-lg;
+  }
+  
+  .elevation-3 {
+    @apply shadow-xl;
+  }
+  
+  .elevation-4 {
+    @apply shadow-2xl;
   }
   
   /* Material design inspired card */
   .material-card {
-    @apply rounded-3xl bg-white dark:bg-gray-800 shadow-sm border-none p-3;
+    @apply rounded-3xl bg-white dark:bg-gray-800 shadow-md border-none p-5;
   }
   
   /* Material FAB button */
   .fab {
-    @apply fixed bottom-20 right-4 w-14 h-14 rounded-full bg-health-primary text-white flex items-center justify-center shadow-lg z-30 android-ripple;
+    @apply fixed bottom-20 right-6 w-20 h-20 rounded-full bg-health-primary text-white flex items-center justify-center shadow-xl z-30 android-ripple;
   }
 
   /* Android-specific scrolling */
@@ -167,26 +167,26 @@
 
   /* Android text styles */
   .android-text-title {
-    @apply text-base font-medium;
+    @apply text-xl font-medium;
   }
 
   .android-text-subtitle {
-    @apply text-sm font-normal text-gray-700 dark:text-gray-300;
+    @apply text-lg font-normal text-gray-700 dark:text-gray-300;
   }
 
   .android-text-body {
-    @apply text-xs text-gray-600 dark:text-gray-400;
+    @apply text-base text-gray-600 dark:text-gray-400;
   }
   
   /* Card with rounded corners and shadow */
   .android-card {
-    @apply rounded-3xl bg-white dark:bg-gray-800 shadow-sm p-2.5 border-none;
+    @apply rounded-3xl bg-white dark:bg-gray-800 shadow-md p-5 border-none;
   }
   
   /* Add text-2xs for very small text */
   .text-2xs {
-    font-size: 0.65rem;
-    line-height: 1rem;
+    font-size: 0.75rem;
+    line-height: 1.25rem;
   }
 }
 

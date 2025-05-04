@@ -292,33 +292,28 @@ const Index = () => {
           {/* Quick Actions */}
           <div className="mt-3">
             <h2 className="text-sm font-semibold mb-1.5">Quick Actions</h2>
-            <div className="grid grid-cols-5 gap-1.5 max-w-xs mx-auto">
-              <ActionButton
-                icon={<Plus size={16} />}
-                label="Meds"
-                onClick={handleAddMedication}
-              />
-              <Link to="/emotional">
+            <div className="grid grid-cols-4 gap-3 mx-auto">
+              <Link to="/emotional" className="h-full">
                 <ActionButton
-                  icon={<Heart size={16} />}
+                  icon={<Heart size={18} />}
                   label="Emotional"
                 />
               </Link>
-              <Link to="/diagnostics">
+              <Link to="/diagnostics" className="h-full">
                 <ActionButton
-                  icon={<Activity size={16} />}
+                  icon={<Activity size={18} />}
                   label="Diagnostics"
                 />
               </Link>
-              <Link to="/knowledge">
+              <Link to="/knowledge" className="h-full">
                 <ActionButton
-                  icon={<BookOpen size={16} />}
+                  icon={<BookOpen size={18} />}
                   label="Knowledge"
                 />
               </Link>
-              <Link to="/profile">
+              <Link to="/profile" className="h-full">
                 <ActionButton
-                  icon={<User size={16} />}
+                  icon={<User size={18} />}
                   label="Profile"
                 />
               </Link>

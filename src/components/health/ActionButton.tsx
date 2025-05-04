@@ -18,12 +18,12 @@ export function ActionButton({
     <button
       onClick={onClick}
       className={cn(
-        "flex flex-col items-center justify-center p-1.5 rounded-xl border bg-card shadow-sm hover:shadow-md transition-all android-ripple material-touch",
+        "flex flex-col items-center justify-center p-2.5 rounded-xl border bg-card shadow-sm hover:shadow-md transition-all android-ripple material-touch w-full h-full",
         className
       )}
     >
-      <div className="text-health-accent p-1 bg-health-accent/10 rounded-full text-[16px]">{icon}</div>
-      <span className="text-2xs font-medium mt-0.5">{label}</span>
+      <div className="text-health-accent p-1.5 bg-health-accent/10 rounded-full mb-1.5">{icon}</div>
+      <span className="text-xs font-medium">{label}</span>
     </button>
   );
 }

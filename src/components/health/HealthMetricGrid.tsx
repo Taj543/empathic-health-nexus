@@ -17,8 +17,6 @@ export function HealthMetricGrid({
   centerLastItem = false 
 }: HealthMetricGridProps) {
   
-  const childrenArray = React.Children.toArray(children);
-  
   if (scrollable) {
     return (
       <div className={cn("w-full overflow-x-auto android-scroll scrollbar-none pb-1 -mx-1 px-1", className)}>
@@ -29,25 +27,7 @@ export function HealthMetricGrid({
     );
   }
   
-  if (centerLastItem && childrenArray.length > 0) {
-    const lastItem = childrenArray.pop();
-    
-    return (
-      <div className={cn("w-[95%] max-w-xs mx-auto", className)}>
-        <div className="grid grid-cols-2 gap-2 mb-2">
-          {childrenArray}
-        </div>
-        {lastItem && (
-          <div className="flex justify-center">
-            <div className="w-[calc(50%-4px)]">
-              {lastItem}
-            </div>
-          </div>
-        )}
-      </div>
-    );
-  }
-  
+  // Always use a simple 2-column grid layout regardless of centerLastItem
   return (
     <div className={cn("grid grid-cols-2 gap-2 mx-auto w-[95%] max-w-xs", className)}>
       {children}

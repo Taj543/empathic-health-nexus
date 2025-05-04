@@ -204,7 +204,7 @@ const Index = () => {
           {/* Health Metrics Categories */}
           <div className="mb-3">
             <h2 className="text-sm font-semibold mb-1.5">Core Health Vitals</h2>
-            <HealthMetricGrid centerLastItem={true}>
+            <HealthMetricGrid>
               <HealthMetricCard
                 title="Heart Rate"
                 value={healthMetrics.heartRate}

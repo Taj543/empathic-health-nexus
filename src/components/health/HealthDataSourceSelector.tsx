@@ -55,28 +55,28 @@ export function HealthDataSourceSelector({
   };
 
   return (
-    <div className={cn("space-y-3", className)}>
-      <h3 className="text-base font-medium mb-1.5">Data Sources</h3>
+    <div className={cn("space-y-4", className)}>
+      <h3 className="text-base font-medium mb-2">Data Sources</h3>
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5">
         {connections.map((connection) => (
           <button
             key={connection.id}
             onClick={() => handleConnect(connection)}
             className={cn(
-              "flex flex-col items-center justify-center p-3.5 rounded-2xl border bg-card shadow-sm h-full w-full",
+              "flex flex-col items-center justify-center p-4 rounded-2xl border bg-card shadow-sm h-full w-full",
               "hover:shadow-md transition-all android-ripple",
               selectedSource === connection.id ? "border-health-accent bg-health-accent/10" : "border-gray-200",
               connecting === connection.id && "opacity-70"
             )}
             disabled={connecting !== null}
           >
-            <div className="relative p-2.5 mb-2.5 bg-gray-50 dark:bg-gray-800 rounded-full">
+            <div className="relative p-3 mb-3 bg-gray-50 dark:bg-gray-800 rounded-full">
               {connection.connected && selectedSource === connection.id && (
                 <span className="absolute -top-1 -right-1 bg-green-500 rounded-full p-1">
                   <Check size={12} className="text-white" />
                 </span>
               )}
-              <Link size={22} className={cn(
+              <Link size={24} className={cn(
                 connection.connected ? "text-health-accent" : "text-gray-400"
               )} />
             </div>

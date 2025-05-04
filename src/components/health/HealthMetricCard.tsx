@@ -25,13 +25,13 @@ export function HealthMetricCard({
   };
 
   return (
-    <div className={cn("android-card flex flex-col elevation-1 py-3 px-3", className)}>
-      <div className="flex justify-between items-center mb-1">
-        <div className="flex items-center gap-1.5">
-          {icon && <div className="text-health-accent bg-health-accent/10 p-1 rounded-full text-[16px]">{icon}</div>}
+    <div className={cn("android-card flex flex-col elevation-1 py-3.5 px-4", className)}>
+      <div className="flex justify-between items-center mb-2">
+        <div className="flex items-center gap-2">
+          {icon && <div className="text-health-accent bg-health-accent/10 p-1.5 rounded-full text-[16px]">{icon}</div>}
           <h3 className="text-sm font-medium">{title}</h3>
         </div>
-        <span className={cn(statusClass[status], "text-xs px-1.5 py-0.5 rounded-full", {
+        <span className={cn(statusClass[status], "text-xs px-2 py-0.5 rounded-full", {
           "bg-green-50": status === "normal",
           "bg-yellow-50": status === "warning",
           "bg-red-50": status === "alert"

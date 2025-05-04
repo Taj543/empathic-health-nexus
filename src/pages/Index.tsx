@@ -203,8 +203,8 @@ const Index = () => {
       <ScrollArea className="flex-1 overflow-y-auto overscroll-behavior-y-contain android-scroll">
         <div className="px-4 pt-3 pb-24 max-w-md mx-auto">
           {/* Health Metrics Categories */}
-          <div className="mb-4">
-            <h2 className="text-lg font-semibold mb-2">Core Health Vitals</h2>
+          <div className="mb-5">
+            <h2 className="text-lg font-semibold mb-3">Core Health Vitals</h2>
             <HealthMetricGrid>
               <HealthMetricCard
                 title="Heart Rate"
@@ -234,8 +234,8 @@ const Index = () => {
             </HealthMetricGrid>
           </div>
 
-          <div className="mb-4">
-            <h2 className="text-lg font-semibold mb-2">Activity</h2>
+          <div className="mb-5">
+            <h2 className="text-lg font-semibold mb-3">Activity</h2>
             <HealthMetricGrid>
               <HealthMetricCard
                 title="Steps"
@@ -253,10 +253,10 @@ const Index = () => {
           </div>
 
           {/* Medications and Weekly Summary */}
-          <div className="space-y-4">
+          <div className="space-y-5">
             {/* Medications */}
             <div className="material-card">
-              <div className="flex justify-between items-center mb-2">
+              <div className="flex justify-between items-center mb-3">
                 <h2 className="text-lg font-semibold">Today's Medications</h2>
                 <button className="text-health-accent text-xs android-ripple px-2 py-1 rounded-full">See All</button>
               </div>
@@ -291,30 +291,30 @@ const Index = () => {
           </div>
 
           {/* Quick Actions */}
-          <div className="mt-4">
-            <h2 className="text-lg font-semibold mb-2">Quick Actions</h2>
-            <div className="grid grid-cols-4 gap-4 mx-auto">
+          <div className="mt-5">
+            <h2 className="text-lg font-semibold mb-3">Quick Actions</h2>
+            <div className="grid grid-cols-4 gap-3 mx-auto">
               <Link to="/emotional" className="h-full">
                 <ActionButton
-                  icon={<Heart size={24} />}
+                  icon={<Heart size={22} />}
                   label="Emotional"
                 />
               </Link>
               <Link to="/diagnostics" className="h-full">
                 <ActionButton
-                  icon={<Activity size={24} />}
+                  icon={<Activity size={22} />}
                   label="Diagnostics"
                 />
               </Link>
               <Link to="/knowledge" className="h-full">
                 <ActionButton
-                  icon={<BookOpen size={24} />}
+                  icon={<BookOpen size={22} />}
                   label="Knowledge"
                 />
               </Link>
               <Link to="/profile" className="h-full">
                 <ActionButton
-                  icon={<User size={24} />}
+                  icon={<User size={22} />}
                   label="Profile"
                 />
               </Link>

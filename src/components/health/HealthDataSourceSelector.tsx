@@ -55,34 +55,34 @@ export function HealthDataSourceSelector({
   };
 
   return (
-    <div className={cn("space-y-2.5", className)}>
-      <h3 className="text-sm font-medium mb-1">Data Sources</h3>
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5">
+    <div className={cn("space-y-3", className)}>
+      <h3 className="text-base font-medium mb-1.5">Data Sources</h3>
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5">
         {connections.map((connection) => (
           <button
             key={connection.id}
             onClick={() => handleConnect(connection)}
             className={cn(
-              "flex flex-col items-center justify-center p-2.5 rounded-xl border bg-card shadow-sm h-full w-full",
+              "flex flex-col items-center justify-center p-3.5 rounded-2xl border bg-card shadow-sm h-full w-full",
               "hover:shadow-md transition-all android-ripple",
-              selectedSource === connection.id ? "border-health-accent bg-health-accent/5" : "border-gray-200",
+              selectedSource === connection.id ? "border-health-accent bg-health-accent/10" : "border-gray-200",
               connecting === connection.id && "opacity-70"
             )}
             disabled={connecting !== null}
           >
-            <div className="relative p-1.5 mb-1.5 bg-gray-50 dark:bg-gray-800 rounded-full">
+            <div className="relative p-2.5 mb-2.5 bg-gray-50 dark:bg-gray-800 rounded-full">
               {connection.connected && selectedSource === connection.id && (
-                <span className="absolute -top-1 -right-1 bg-green-500 rounded-full p-0.5">
-                  <Check size={10} className="text-white" />
+                <span className="absolute -top-1 -right-1 bg-green-500 rounded-full p-1">
+                  <Check size={12} className="text-white" />
                 </span>
               )}
-              <Link size={18} className={cn(
+              <Link size={22} className={cn(
                 connection.connected ? "text-health-accent" : "text-gray-400"
               )} />
             </div>
-            <span className="text-xs font-medium">{connection.name}</span>
+            <span className="text-sm font-medium">{connection.name}</span>
             {!connection.connected && (
-              <span className="text-[10px] text-gray-400 mt-0.5">
+              <span className="text-xs text-gray-400 mt-1">
                 {connecting === connection.id ? "Connecting..." : "Not connected"}
               </span>
             )}

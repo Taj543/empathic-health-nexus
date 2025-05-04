@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Plus, Search, Heart, Activity, BookOpen, User, MessageCircle, Bell } from "lucide-react";
 import { HealthMetricCard } from "@/components/health/HealthMetricCard";
@@ -184,14 +185,14 @@ const Index = () => {
   return (
     <div className="flex flex-col h-full overflow-hidden">
       {/* Header */}
-      <header className="px-3 pt-4 pb-2 bg-white dark:bg-gray-900 elevation-1 z-10">
-        <h1 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-0.5">
+      <header className="px-4 pt-5 pb-3 bg-white dark:bg-gray-900 elevation-1 z-10">
+        <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-1">
           Welcome back, {user?.name || "User"}
         </h1>
-        <p className="text-xs text-gray-600 dark:text-gray-400">
+        <p className="text-sm text-gray-600 dark:text-gray-400">
           Here's your health overview
           {dataSource !== 'local' && (
-            <span className="ml-1.5 text-2xs bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded-full">
+            <span className="ml-2 text-xs bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded-full">
               Connected to {dataSource}
             </span>
           )}
@@ -200,17 +201,17 @@ const Index = () => {
 
       {/* Scrollable Content Area */}
       <ScrollArea className="flex-1 overflow-y-auto overscroll-behavior-y-contain android-scroll">
-        <div className="px-3 pt-2 pb-20 max-w-sm mx-auto">
+        <div className="px-4 pt-3 pb-24 max-w-md mx-auto">
           {/* Health Metrics Categories */}
-          <div className="mb-3">
-            <h2 className="text-sm font-semibold mb-1.5">Core Health Vitals</h2>
+          <div className="mb-4">
+            <h2 className="text-lg font-semibold mb-2">Core Health Vitals</h2>
             <HealthMetricGrid>
               <HealthMetricCard
                 title="Heart Rate"
                 value={healthMetrics.heartRate}
                 unit="bpm"
                 status="normal"
-                icon={<Heart size={14} />}
+                icon={<Heart size={18} />}
               />
               <HealthMetricCard
                 title="Blood Pressure"
@@ -233,14 +234,14 @@ const Index = () => {
             </HealthMetricGrid>
           </div>
 
-          <div className="mb-3">
-            <h2 className="text-sm font-semibold mb-1.5">Activity</h2>
+          <div className="mb-4">
+            <h2 className="text-lg font-semibold mb-2">Activity</h2>
             <HealthMetricGrid>
               <HealthMetricCard
                 title="Steps"
                 value={healthMetrics.steps.toLocaleString()}
                 status="normal"
-                icon={<Activity size={14} />}
+                icon={<Activity size={18} />}
               />
               <HealthMetricCard
                 title="Calories"
@@ -252,12 +253,12 @@ const Index = () => {
           </div>
 
           {/* Medications and Weekly Summary */}
-          <div className="space-y-3">
+          <div className="space-y-4">
             {/* Medications */}
             <div className="material-card">
-              <div className="flex justify-between items-center mb-1.5">
-                <h2 className="text-sm font-semibold">Today's Medications</h2>
-                <button className="text-health-accent text-2xs android-ripple px-1.5 py-0.5 rounded-full">See All</button>
+              <div className="flex justify-between items-center mb-2">
+                <h2 className="text-lg font-semibold">Today's Medications</h2>
+                <button className="text-health-accent text-xs android-ripple px-2 py-1 rounded-full">See All</button>
               </div>
               <div className="divide-y divide-gray-100 dark:divide-gray-800">
                 {medications.map((med) => (
@@ -276,10 +277,10 @@ const Index = () => {
               </div>
               <button 
                 onClick={handleAddMedication}
-                className="mt-2.5 w-full py-1.5 border border-dashed border-gray-300 dark:border-gray-700 rounded-2xl flex items-center justify-center text-health-accent hover:bg-gray-50 dark:hover:bg-gray-800 android-ripple"
+                className="mt-3 w-full py-2 border border-dashed border-gray-300 dark:border-gray-700 rounded-2xl flex items-center justify-center text-health-accent hover:bg-gray-50 dark:hover:bg-gray-800 android-ripple"
               >
-                <Plus size={12} className="mr-1" />
-                <span className="text-xs">Add Medication</span>
+                <Plus size={16} className="mr-1.5" />
+                <span className="text-sm">Add Medication</span>
               </button>
             </div>
 
@@ -290,30 +291,30 @@ const Index = () => {
           </div>
 
           {/* Quick Actions */}
-          <div className="mt-3">
-            <h2 className="text-sm font-semibold mb-1.5">Quick Actions</h2>
-            <div className="grid grid-cols-4 gap-3 mx-auto">
+          <div className="mt-4">
+            <h2 className="text-lg font-semibold mb-2">Quick Actions</h2>
+            <div className="grid grid-cols-4 gap-4 mx-auto">
               <Link to="/emotional" className="h-full">
                 <ActionButton
-                  icon={<Heart size={18} />}
+                  icon={<Heart size={24} />}
                   label="Emotional"
                 />
               </Link>
               <Link to="/diagnostics" className="h-full">
                 <ActionButton
-                  icon={<Activity size={18} />}
+                  icon={<Activity size={24} />}
                   label="Diagnostics"
                 />
               </Link>
               <Link to="/knowledge" className="h-full">
                 <ActionButton
-                  icon={<BookOpen size={18} />}
+                  icon={<BookOpen size={24} />}
                   label="Knowledge"
                 />
               </Link>
               <Link to="/profile" className="h-full">
                 <ActionButton
-                  icon={<User size={18} />}
+                  icon={<User size={24} />}
                   label="Profile"
                 />
               </Link>
@@ -325,7 +326,7 @@ const Index = () => {
       {/* Add Floating Action Button (FAB) for VaidyaMind medical bot */}
       <Link to="/medical-ai">
         <button className="fab">
-          <MessageCircle size={24} />
+          <MessageCircle size={28} />
         </button>
       </Link>
 

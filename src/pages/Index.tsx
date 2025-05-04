@@ -1,12 +1,10 @@
-
 import { useState, useEffect } from "react";
-import { Plus, Search, Heart, Activity, BookOpen, User, MessageCircle, Bell } from "lucide-react";
+import { Plus, Search, Heart, Activity, BookOpen, User, MessageCircle, Bell, Home, BarChart2 } from "lucide-react";
 import { HealthMetricCard } from "@/components/health/HealthMetricCard";
 import { MedicationCard } from "@/components/health/MedicationCard";
 import { ActionButton } from "@/components/health/ActionButton";
 import { HealthMetricGrid } from "@/components/health/HealthMetricGrid";
 import { MedicationAlarmDialog } from "@/components/health/MedicationAlarmDialog";
-import { WeeklySummaryTabs } from "@/components/health/WeeklySummaryTabs";
 import { NotificationPermissionDialog } from "@/components/health/NotificationPermissionDialog";
 import { useToast } from "@/hooks/use-toast";
 import { useNotificationPermission } from "@/hooks/useNotificationPermission";
@@ -185,14 +183,14 @@ const Index = () => {
   return (
     <div className="flex flex-col h-full overflow-hidden">
       {/* Header */}
-      <header className="px-4 pt-5 pb-3 bg-white dark:bg-gray-900 elevation-1 z-10">
-        <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-1">
+      <header className="px-8 pt-8 pb-4 bg-white dark:bg-gray-900">
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
           Welcome back, {user?.name || "User"}
         </h1>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+        <p className="text-lg text-gray-600 dark:text-gray-400">
           Here's your health overview
           {dataSource !== 'local' && (
-            <span className="ml-2 text-xs bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded-full">
+            <span className="ml-2 text-sm bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full">
               Connected to {dataSource}
             </span>
           )}
@@ -200,18 +198,16 @@ const Index = () => {
       </header>
 
       {/* Scrollable Content Area */}
-      <ScrollArea className="flex-1 overflow-y-auto overscroll-behavior-y-contain android-scroll">
-        <div className="px-4 pt-3 pb-24 max-w-md mx-auto">
-          {/* Health Metrics Categories */}
-          <div className="mb-5">
-            <h2 className="text-lg font-semibold mb-3">Core Health Vitals</h2>
+      <ScrollArea className="flex-1 overflow-y-auto overscroll-behavior-y-contain">
+        <div className="px-8 pt-6 pb-32 max-w-5xl mx-auto">
+          {/* Health Metrics */}
+          <div className="mb-8">
             <HealthMetricGrid>
               <HealthMetricCard
                 title="Heart Rate"
                 value={healthMetrics.heartRate}
                 unit="bpm"
                 status="normal"
-                icon={<Heart size={18} />}
               />
               <HealthMetricCard
                 title="Blood Pressure"
@@ -219,46 +215,15 @@ const Index = () => {
                 unit="mmHg"
                 status="normal"
               />
-              <HealthMetricCard
-                title="SpO₂"
-                value={healthMetrics.spO2}
-                unit="%"
-                status="normal"
-              />
-              <HealthMetricCard
-                title="Respiratory Rate"
-                value={healthMetrics.respiratoryRate}
-                unit="bpm"
-                status="normal"
-              />
             </HealthMetricGrid>
           </div>
 
-          <div className="mb-5">
-            <h2 className="text-lg font-semibold mb-3">Activity</h2>
-            <HealthMetricGrid>
-              <HealthMetricCard
-                title="Steps"
-                value={healthMetrics.steps.toLocaleString()}
-                status="normal"
-                icon={<Activity size={18} />}
-              />
-              <HealthMetricCard
-                title="Calories"
-                value={healthMetrics.calories}
-                unit="kcal"
-                status="normal"
-              />
-            </HealthMetricGrid>
-          </div>
-
-          {/* Medications and Weekly Summary */}
-          <div className="space-y-5">
-            {/* Medications */}
-            <div className="material-card">
-              <div className="flex justify-between items-center mb-3">
-                <h2 className="text-lg font-semibold">Today's Medications</h2>
-                <button className="text-health-accent text-xs android-ripple px-2 py-1 rounded-full">See All</button>
+          <div className="grid grid-cols-2 gap-6 mb-8">
+            {/* Medications Section */}
+            <div className="rounded-xl border bg-white p-8 shadow-sm">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-2xl font-semibold">Today's Medications</h2>
+                <button className="text-health-accent text-sm">See All</button>
               </div>
               <div className="divide-y divide-gray-100 dark:divide-gray-800">
                 {medications.map((med) => (
@@ -277,60 +242,75 @@ const Index = () => {
               </div>
               <button 
                 onClick={handleAddMedication}
-                className="mt-3 w-full py-2 border border-dashed border-gray-300 dark:border-gray-700 rounded-2xl flex items-center justify-center text-health-accent hover:bg-gray-50 dark:hover:bg-gray-800 android-ripple"
+                className="mt-6 w-full py-3 border border-dashed border-gray-300 dark:border-gray-700 rounded-xl flex items-center justify-center text-health-accent hover:bg-gray-50 dark:hover:bg-gray-800"
               >
-                <Plus size={16} className="mr-1.5" />
-                <span className="text-sm">Add Medication</span>
+                <Plus size={20} className="mr-2" />
+                <span className="text-lg">Add Medication</span>
               </button>
             </div>
 
-            {/* Weekly Summary */}
-            <div className="material-card">
-              <WeeklySummaryTabs onDataSourceChange={handleDataSourceChange} />
+            {/* Weekly Summary Section */}
+            <div className="rounded-xl border bg-white p-8 shadow-sm">
+              {/* This is a placeholder for the weekly summary chart that appears in the template */}
+              <div className="h-full bg-black rounded-lg flex items-center justify-center">
+                {/* You can add content here later if needed */}
+              </div>
             </div>
           </div>
 
           {/* Quick Actions */}
-          <div className="mt-5">
-            <h2 className="text-lg font-semibold mb-3">Quick Actions</h2>
-            <div className="grid grid-cols-4 gap-3 mx-auto">
-              <Link to="/emotional" className="h-full">
-                <ActionButton
-                  icon={<Heart size={22} />}
-                  label="Emotional"
-                />
-              </Link>
-              <Link to="/diagnostics" className="h-full">
-                <ActionButton
-                  icon={<Activity size={22} />}
-                  label="Diagnostics"
-                />
-              </Link>
-              <Link to="/knowledge" className="h-full">
-                <ActionButton
-                  icon={<BookOpen size={22} />}
-                  label="Knowledge"
-                />
-              </Link>
-              <Link to="/profile" className="h-full">
-                <ActionButton
-                  icon={<User size={22} />}
-                  label="Profile"
-                />
-              </Link>
+          <div className="mb-8">
+            <h2 className="text-2xl font-semibold mb-6">Quick Actions</h2>
+            <div className="grid grid-cols-4 gap-6">
+              <ActionButton
+                icon={<Plus size={28} />}
+                label="Meds"
+              />
+              <ActionButton
+                icon={<MessageCircle size={28} />}
+                label="Chat"
+              />
+              <div className="h-full bg-black rounded-xl"></div>
+              <ActionButton
+                icon={<Search size={28} />}
+                label="Symptoms"
+              />
             </div>
           </div>
         </div>
       </ScrollArea>
 
-      {/* Add Floating Action Button (FAB) for VaidyaMind medical bot */}
-      <Link to="/medical-ai">
-        <button className="fab">
-          <MessageCircle size={28} />
-        </button>
-      </Link>
-
-      {/* Medication Alarm Dialog */}
+      {/* Bottom Navigation */}
+      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 py-4">
+        <div className="flex justify-around max-w-5xl mx-auto">
+          <Link to="/" className="flex flex-col items-center text-health-accent">
+            <Home size={24} />
+            <span className="text-xs mt-1">Home</span>
+          </Link>
+          <Link to="/medical-ai" className="flex flex-col items-center text-gray-500">
+            <MessageCircle size={24} />
+            <span className="text-xs mt-1">Medical AI</span>
+          </Link>
+          <Link to="/emotional" className="flex flex-col items-center text-gray-500">
+            <Heart size={24} />
+            <span className="text-xs mt-1">Emotional</span>
+          </Link>
+          <Link to="/diagnostics" className="flex flex-col items-center text-gray-500">
+            <Activity size={24} />
+            <span className="text-xs mt-1">Diagnostics</span>
+          </Link>
+          <Link to="/knowledge" className="flex flex-col items-center text-gray-500">
+            <BookOpen size={24} />
+            <span className="text-xs mt-1">Knowledge</span>
+          </Link>
+          <Link to="/profile" className="flex flex-col items-center text-gray-500">
+            <User size={24} />
+            <span className="text-xs mt-1">Profile</span>
+          </Link>
+        </div>
+      </nav>
+      
+      {/* Dialogs - keep existing code unchanged */}
       <MedicationAlarmDialog
         open={dialogOpen}
         onOpenChange={setDialogOpen}
@@ -338,7 +318,6 @@ const Index = () => {
         onSave={handleSaveMedication}
       />
       
-      {/* Notification Permission Dialog */}
       <NotificationPermissionDialog
         open={showPermissionDialog}
         onOpenChange={setShowPermissionDialog}

@@ -19,29 +19,24 @@ export function HealthMetricCard({
   icon,
 }: HealthMetricCardProps) {
   const statusClass = {
-    normal: "status-normal",
-    warning: "status-warning",
-    alert: "status-alert",
+    normal: "text-green-500",
+    warning: "text-yellow-500",
+    alert: "text-red-500",
   };
 
   return (
-    <div className={cn("android-card flex flex-col elevation-2 py-6 px-6", className)}>
-      <div className="flex justify-between items-center mb-4">
-        <div className="flex items-center gap-3">
-          {icon && <div className="text-health-accent bg-health-accent/10 p-3 rounded-full text-2xl">{icon}</div>}
-          <h3 className="text-xl font-medium">{title}</h3>
-        </div>
-        <span className={cn(statusClass[status], "text-sm px-3 py-1 rounded-full", {
-          "bg-green-50": status === "normal",
-          "bg-yellow-50": status === "warning",
-          "bg-red-50": status === "alert"
-        })}>
-          {status === "normal" ? "Normal" : status === "warning" ? "Warning" : "Alert"}
-        </span>
+    <div className={cn("rounded-xl border bg-white p-8 shadow-sm", className)}>
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="text-xl font-medium text-gray-800">{title}</h3>
+        {status && (
+          <span className={cn(statusClass[status], "text-sm font-medium")}>
+            {status === "normal" ? "Normal" : status === "warning" ? "Warning" : "Alert"}
+          </span>
+        )}
       </div>
       <div className="flex items-baseline">
-        <span className="text-4xl font-bold">{value}</span>
-        {unit && <span className="ml-2 text-lg text-gray-500">{unit}</span>}
+        <span className="text-5xl font-bold text-gray-900">{value}</span>
+        {unit && <span className="ml-2 text-xl text-gray-500">{unit}</span>}
       </div>
     </div>
   );

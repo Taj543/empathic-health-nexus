@@ -20,7 +20,7 @@ export function HealthMetricGrid({
   if (scrollable) {
     return (
       <div className={cn("w-full overflow-x-auto android-scroll scrollbar-none pb-4 -mx-1 px-1", className)}>
-        <div className="grid grid-flow-col auto-cols-[240px] gap-5 w-max mx-auto">
+        <div className="grid grid-flow-col auto-cols-[320px] gap-6 w-max mx-auto">
           {children}
         </div>
       </div>
@@ -29,7 +29,7 @@ export function HealthMetricGrid({
   
   // Use a simple 2-column grid layout with improved spacing for larger displays
   return (
-    <div className={cn("grid grid-cols-2 gap-5 mx-auto w-full", className)}>
+    <div className={cn("grid grid-cols-2 gap-6 mx-auto w-full", className)}>
       {children}
     </div>
   );

@@ -15,6 +15,7 @@ import Emotional from "./pages/Emotional";
 import Diagnostics from "./pages/Diagnostics";
 import Knowledge from "./pages/Knowledge";
 import Profile from "./pages/Profile";
+import HealthConnections from "./pages/HealthConnections";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -37,9 +38,9 @@ const App = () => (
                 <Index />
               </ProtectedRoute>
             } />
-            <Route path="/medical-ai" element={
+            <Route path="/health-connections" element={
               <ProtectedRoute>
-                <MedicalAI />
+                <HealthConnections />
               </ProtectedRoute>
             } />
             <Route path="/emotional" element={

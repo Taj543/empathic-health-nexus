@@ -218,7 +218,7 @@ const Index = () => {
             </HealthMetricGrid>
           </div>
 
-          <div className="grid grid-cols-2 gap-6 mb-8">
+          <div className="grid grid-cols-1 gap-6 mb-8">
             {/* Medications Section */}
             <div className="rounded-xl border bg-white p-8 shadow-sm">
               <div className="flex justify-between items-center mb-6">
@@ -248,32 +248,23 @@ const Index = () => {
                 <span className="text-lg">Add Medication</span>
               </button>
             </div>
-
-            {/* Weekly Summary Section */}
-            <div className="rounded-xl border bg-white p-8 shadow-sm">
-              {/* This is a placeholder for the weekly summary chart that appears in the template */}
-              <div className="h-full bg-black rounded-lg flex items-center justify-center">
-                {/* You can add content here later if needed */}
-              </div>
-            </div>
           </div>
 
           {/* Quick Actions */}
           <div className="mb-8">
             <h2 className="text-2xl font-semibold mb-6">Quick Actions</h2>
-            <div className="grid grid-cols-4 gap-6">
+            <div className="grid grid-cols-3 gap-6">
               <ActionButton
                 icon={<Plus size={28} />}
                 label="Meds"
               />
               <ActionButton
-                icon={<MessageCircle size={28} />}
-                label="Chat"
-              />
-              <div className="h-full bg-black rounded-xl"></div>
-              <ActionButton
                 icon={<Search size={28} />}
                 label="Symptoms"
+              />
+              <ActionButton
+                icon={<Activity size={28} />}
+                label="Diagnostics"
               />
             </div>
           </div>
@@ -286,10 +277,6 @@ const Index = () => {
           <Link to="/" className="flex flex-col items-center text-health-accent">
             <Home size={24} />
             <span className="text-xs mt-1">Home</span>
-          </Link>
-          <Link to="/medical-ai" className="flex flex-col items-center text-gray-500">
-            <MessageCircle size={24} />
-            <span className="text-xs mt-1">Medical AI</span>
           </Link>
           <Link to="/emotional" className="flex flex-col items-center text-gray-500">
             <Heart size={24} />

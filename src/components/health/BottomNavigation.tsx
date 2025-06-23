@@ -1,6 +1,6 @@
 
 import { Link, useLocation } from "react-router-dom";
-import { Home, MessageCircle, Heart, Activity, BookOpen, User } from "lucide-react";
+import { Home, Heart, Activity, BookOpen, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function BottomNavigation() {
@@ -8,7 +8,6 @@ export function BottomNavigation() {
   
   const navItems = [
     { icon: <Home size={20} />, label: "Home", path: "/" },
-    { icon: <MessageCircle size={20} />, label: "Medical AI", path: "/medical-ai" },
     { icon: <Heart size={20} />, label: "Emotional", path: "/emotional" },
     { icon: <Activity size={20} />, label: "Diagnostics", path: "/diagnostics" },
     { icon: <BookOpen size={20} />, label: "Knowledge", path: "/knowledge" },

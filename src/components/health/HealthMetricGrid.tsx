@@ -27,7 +27,7 @@ export function HealthMetricGrid({
     );
   }
   
-  // Use a simple 2-column grid layout with improved spacing for larger displays
+  // Use a 2x2 grid layout for 4 health metrics
   return (
     <div className={cn("grid grid-cols-2 gap-6 mx-auto w-full", className)}>
       {children}

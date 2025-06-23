@@ -4,6 +4,7 @@ import { HealthMetricCard } from "@/components/health/HealthMetricCard";
 import { MedicationCard } from "@/components/health/MedicationCard";
 import { ActionButton } from "@/components/health/ActionButton";
 import { HealthMetricGrid } from "@/components/health/HealthMetricGrid";
+import { WeeklySummaryTabs } from "@/components/health/WeeklySummaryTabs";
 import { MedicationAlarmDialog } from "@/components/health/MedicationAlarmDialog";
 import { NotificationPermissionDialog } from "@/components/health/NotificationPermissionDialog";
 import { useToast } from "@/hooks/use-toast";
@@ -200,7 +201,7 @@ const Index = () => {
       {/* Scrollable Content Area */}
       <ScrollArea className="flex-1 overflow-y-auto overscroll-behavior-y-contain">
         <div className="px-8 pt-6 pb-32 max-w-5xl mx-auto">
-          {/* Health Metrics */}
+          {/* Health Metrics - Now includes all 4 metrics */}
           <div className="mb-8">
             <HealthMetricGrid>
               <HealthMetricCard
@@ -215,7 +216,24 @@ const Index = () => {
                 unit="mmHg"
                 status="normal"
               />
+              <HealthMetricCard
+                title="SpO₂"
+                value={healthMetrics.spO2}
+                unit="%"
+                status="normal"
+              />
+              <HealthMetricCard
+                title="Calories"
+                value={healthMetrics.calories}
+                unit="kcal"
+                status="normal"
+              />
             </HealthMetricGrid>
+          </div>
+
+          {/* Weekly Summary Section with Charts */}
+          <div className="mb-8">
+            <WeeklySummaryTabs onDataSourceChange={handleDataSourceChange} />
           </div>
 
           <div className="grid grid-cols-1 gap-6 mb-8">

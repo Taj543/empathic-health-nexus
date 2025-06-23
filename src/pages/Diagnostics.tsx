@@ -1,91 +1,122 @@
 
 import { useState } from "react";
-import { Search, ArrowRight } from "lucide-react";
+import { ArrowLeft, FileText, Search, AlertTriangle, Pill, Stethoscope, Camera } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 const Diagnostics = () => {
   const [searchQuery, setSearchQuery] = useState("");
   
-  // Sample symptom categories
-  const categories = [
-    { id: 1, name: "Head & Neck", icon: "🧠", count: 12 },
-    { id: 2, name: "Chest & Heart", icon: "❤️", count: 8 },
-    { id: 3, name: "Abdomen", icon: "🩻", count: 15 },
-    { id: 4, name: "Limbs", icon: "💪", count: 10 },
-    { id: 5, name: "Skin", icon: "🧬", count: 7 },
-    { id: 6, name: "Mental", icon: "🧠", count: 9 },
-  ];
-  
-  // Sample recent symptom checks
-  const recentChecks = [
-    { id: 1, symptom: "Headache", date: "2 days ago", result: "Tension headache" },
-    { id: 2, symptom: "Sore throat", date: "1 week ago", result: "Common cold" },
+  const diagnosticFeatures = [
+    {
+      id: 1,
+      title: "Prescription Analyzer",
+      description: "Upload and analyze prescription documents",
+      icon: <FileText size={24} />,
+      color: "bg-blue-50 border-blue-200",
+      iconColor: "text-blue-600"
+    },
+    {
+      id: 2,
+      title: "Symptom Checker",
+      description: "Check your symptoms for possible conditions",
+      icon: <Search size={24} />,
+      color: "bg-green-50 border-green-200",
+      iconColor: "text-green-600"
+    },
+    {
+      id: 3,
+      title: "Disease Detector",
+      description: "AI-powered disease detection from symptoms",
+      icon: <Stethoscope size={24} />,
+      color: "bg-purple-50 border-purple-200",
+      iconColor: "text-purple-600"
+    },
+    {
+      id: 4,
+      title: "Medicine Side Effects",
+      description: "Search medicines and find side effects",
+      icon: <Pill size={24} />,
+      color: "bg-red-50 border-red-200",
+      iconColor: "text-red-600"
+    },
+    {
+      id: 5,
+      title: "Drug Interaction Checker",
+      description: "Check for dangerous drug interactions",
+      icon: <AlertTriangle size={24} />,
+      color: "bg-orange-50 border-orange-200",
+      iconColor: "text-orange-600"
+    },
+    {
+      id: 6,
+      title: "Medical Image Analysis",
+      description: "Upload medical images for AI analysis",
+      icon: <Camera size={24} />,
+      color: "bg-indigo-50 border-indigo-200",
+      iconColor: "text-indigo-600"
+    }
   ];
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-gray-50">
       <header className="px-6 py-4 bg-white border-b border-gray-200">
-        <h1 className="text-xl font-bold">Diagnostics</h1>
-        <p className="text-sm text-gray-500">Check your symptoms</p>
+        <div className="flex items-center mb-2">
+          <Link to="/" className="mr-4 p-2 rounded-full hover:bg-gray-100">
+            <ArrowLeft size={20} className="text-gray-600" />
+          </Link>
+          <h1 className="text-xl font-bold">Medical Diagnostics</h1>
+        </div>
+        <p className="text-sm text-gray-500 ml-12">AI-powered medical analysis tools</p>
       </header>
 
-      <div className="px-6 py-4">
-        <div className="relative">
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search symptoms..."
-            className="w-full bg-white border border-gray-300 rounded-full px-4 py-2 pl-10 focus:outline-none focus:ring-2 focus:ring-health-primary"
-          />
-          <Search
-            size={18}
-            className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-          />
-        </div>
-      </div>
-
-      <div className="px-6 py-2">
-        <h2 className="text-lg font-semibold mb-3">Symptom Categories</h2>
-        <div className="grid grid-cols-2 gap-3">
-          {categories.map((category) => (
-            <div
-              key={category.id}
-              className="bg-white rounded-xl border border-gray-200 p-4 flex items-center hover:shadow-sm transition-shadow"
-            >
-              <span className="text-2xl mr-3">{category.icon}</span>
-              <div className="flex-1">
-                <h3 className="font-medium">{category.name}</h3>
-                <p className="text-xs text-gray-500">{category.count} symptoms</p>
-              </div>
-              <ArrowRight size={16} className="text-gray-400" />
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="px-6 py-4">
-        <h2 className="text-lg font-semibold mb-3">Recent Checks</h2>
-        {recentChecks.map((check) => (
-          <div
-            key={check.id}
-            className="bg-white rounded-xl border border-gray-200 p-4 mb-3 hover:shadow-sm transition-shadow"
-          >
-            <div className="flex justify-between items-center">
-              <h3 className="font-medium">{check.symptom}</h3>
-              <span className="text-xs text-gray-500">{check.date}</span>
-            </div>
-            <p className="text-sm text-gray-700 mt-1">{check.result}</p>
-            <button className="text-health-primary text-sm mt-2 flex items-center">
-              View details <ArrowRight size={14} className="ml-1" />
-            </button>
+      <div className="px-6 py-6">
+        <div className="max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {diagnosticFeatures.map((feature) => (
+              <Card key={feature.id} className={`${feature.color} hover:shadow-md transition-shadow cursor-pointer`}>
+                <CardHeader className="pb-3">
+                  <div className="flex items-center space-x-3">
+                    <div className={`p-2 rounded-lg ${feature.iconColor} bg-white`}>
+                      {feature.icon}
+                    </div>
+                    <div>
+                      <CardTitle className="text-lg">{feature.title}</CardTitle>
+                      <CardDescription className="text-sm text-gray-600">
+                        {feature.description}
+                      </CardDescription>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent className="pt-0">
+                  <Button variant="outline" className="w-full">
+                    Get Started
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
           </div>
-        ))}
-      </div>
 
-      <div className="px-6 py-2 pb-6">
-        <button className="w-full bg-health-primary text-white rounded-full py-3 font-medium">
-          Start New Symptom Check
-        </button>
+          <div className="mt-8">
+            <Card className="bg-white">
+              <CardHeader>
+                <CardTitle className="text-lg">Quick Actions</CardTitle>
+                <CardDescription>
+                  Start a quick medical assessment
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <Button className="w-full bg-health-primary hover:bg-health-primary/90" size="lg">
+                  Start Emergency Assessment
+                </Button>
+                <Button variant="outline" className="w-full" size="lg">
+                  Schedule Health Check
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -30,7 +30,7 @@ const HealthConnections = () => {
             Health Data Connections
           </h1>
         </div>
-        <p className="text-lg text-gray-600 dark:text-gray-400">
+        <p className="text-lg text-gray-600 dark:text-gray-400 ml-14">
           Connect your health apps and devices to sync your data automatically
         </p>
       </header>

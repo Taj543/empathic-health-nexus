@@ -64,9 +64,9 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				health: {
-					primary: '#2D9CDB', // Blue for primary elements
-					secondary: '#56CCF2', // Lighter blue for secondary elements
-					accent: '#F2994A', // Orange for accent/CTA elements
+					primary: '#FF6B35', // Orange for primary elements
+					secondary: '#FF8F65', // Lighter orange for secondary elements
+					accent: '#FFA726', // Amber for accent/CTA elements
 					success: '#27AE60', // Green for success/normal states
 					warning: '#F2C94C', // Yellow for warnings
 					danger: '#EB5757', // Red for danger/alerts

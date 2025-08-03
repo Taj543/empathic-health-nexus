@@ -98,24 +98,6 @@ const Diagnostics = () => {
             ))}
           </div>
 
-          <div className="mt-8">
-            <Card className="bg-white">
-              <CardHeader>
-                <CardTitle className="text-lg">Quick Actions</CardTitle>
-                <CardDescription>
-                  Start a quick medical assessment
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <Button className="w-full bg-health-primary hover:bg-health-primary/90" size="lg">
-                  Start Emergency Assessment
-                </Button>
-                <Button variant="outline" className="w-full" size="lg">
-                  Schedule Health Check
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
         </div>
       </div>
     </div>

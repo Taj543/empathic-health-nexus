@@ -6,6 +6,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/hooks/useAuth";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
+import { BottomNavigation } from "@/components/health/BottomNavigation";
+import { Bot } from "lucide-react";
 
 import Index from "./pages/Index";
 import Login from "./pages/Login";
@@ -66,6 +68,23 @@ const App = () => (
             
             {/* Catch-all route */}
             <Route path="*" element={<NotFound />} />
+          </Routes>
+          
+          {/* Global Bottom Navigation - only show on protected routes */}
+          <Routes>
+            <Route path="/login" element={null} />
+            <Route path="/signup" element={null} />
+            <Route path="*" element={
+              <ProtectedRoute>
+                <>
+                  <BottomNavigation />
+                  {/* Floating AI Chatbot Button */}
+                  <button className="fixed bottom-20 right-6 w-14 h-14 bg-health-primary hover:bg-health-primary/90 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center z-30">
+                    <Bot size={24} />
+                  </button>
+                </>
+              </ProtectedRoute>
+            } />
           </Routes>
         </BrowserRouter>
       </AuthProvider>

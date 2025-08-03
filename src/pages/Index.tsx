@@ -271,37 +271,6 @@ const Index = () => {
         </div>
       </ScrollArea>
 
-      {/* Bottom Navigation */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 py-4">
-        <div className="flex justify-around max-w-5xl mx-auto">
-          <Link to="/" className="flex flex-col items-center text-health-accent">
-            <Home size={24} />
-            <span className="text-xs mt-1">Home</span>
-          </Link>
-          <Link to="/emotional" className="flex flex-col items-center text-gray-500">
-            <Heart size={24} />
-            <span className="text-xs mt-1">SnehiAi</span>
-          </Link>
-          <Link to="/diagnostics" className="flex flex-col items-center text-gray-500">
-            <Activity size={24} />
-            <span className="text-xs mt-1">Diagnostics</span>
-          </Link>
-          <Link to="/knowledge" className="flex flex-col items-center text-gray-500">
-            <BookOpen size={24} />
-            <span className="text-xs mt-1">Knowledge</span>
-          </Link>
-          <Link to="/profile" className="flex flex-col items-center text-gray-500">
-            <User size={24} />
-            <span className="text-xs mt-1">Profile</span>
-          </Link>
-        </div>
-      </nav>
-
-      {/* Floating AI Chatbot Button */}
-      <button className="fixed bottom-20 right-6 w-14 h-14 bg-health-primary hover:bg-health-primary/90 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center z-30">
-        <Bot size={24} />
-      </button>
-      
       {/* Dialogs - keep existing code unchanged */}
       <MedicationAlarmDialog
         open={dialogOpen}

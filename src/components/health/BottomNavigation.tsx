@@ -8,7 +8,7 @@ export function BottomNavigation() {
   
   const navItems = [
     { icon: <Home size={20} />, label: "Home", path: "/" },
-    { icon: <Heart size={20} />, label: "Emotional", path: "/emotional" },
+    { icon: <Heart size={20} />, label: "SnehiAi", path: "/emotional" },
     { icon: <Activity size={20} />, label: "Diagnostics", path: "/diagnostics" },
     { icon: <BookOpen size={20} />, label: "Knowledge", path: "/knowledge" },
     { icon: <User size={20} />, label: "Profile", path: "/profile" },

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Plus, Search, Heart, Activity, BookOpen, User, MessageCircle, Bell, Home, BarChart2 } from "lucide-react";
+import { Plus, Search, Heart, Activity, BookOpen, User, MessageCircle, Bell, Home, BarChart2, Bot } from "lucide-react";
 import { HealthMetricCard } from "@/components/health/HealthMetricCard";
 import { MedicationCard } from "@/components/health/MedicationCard";
 import { ActionButton } from "@/components/health/ActionButton";
@@ -268,24 +268,6 @@ const Index = () => {
             </div>
           </div>
 
-          {/* Quick Actions */}
-          <div className="mb-8">
-            <h2 className="text-2xl font-semibold mb-6">Quick Actions</h2>
-            <div className="grid grid-cols-3 gap-6">
-              <ActionButton
-                icon={<Plus size={28} />}
-                label="Meds"
-              />
-              <ActionButton
-                icon={<Search size={28} />}
-                label="Symptoms"
-              />
-              <ActionButton
-                icon={<Activity size={28} />}
-                label="Diagnostics"
-              />
-            </div>
-          </div>
         </div>
       </ScrollArea>
 
@@ -298,7 +280,7 @@ const Index = () => {
           </Link>
           <Link to="/emotional" className="flex flex-col items-center text-gray-500">
             <Heart size={24} />
-            <span className="text-xs mt-1">Emotional</span>
+            <span className="text-xs mt-1">SnehiAi</span>
           </Link>
           <Link to="/diagnostics" className="flex flex-col items-center text-gray-500">
             <Activity size={24} />
@@ -314,6 +296,11 @@ const Index = () => {
           </Link>
         </div>
       </nav>
+
+      {/* Floating AI Chatbot Button */}
+      <button className="fixed bottom-20 right-6 w-14 h-14 bg-health-primary hover:bg-health-primary/90 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center z-30">
+        <Bot size={24} />
+      </button>
       
       {/* Dialogs - keep existing code unchanged */}
       <MedicationAlarmDialog
